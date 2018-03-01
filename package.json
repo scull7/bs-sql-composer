@@ -1,0 +1,9 @@
+{
+  "name": "bs-sql-composer",
+  "version": "0.1.0",
+  "description": "A library for SQL composition in BuckleScript",
+  "main": "src/SqlComposer.bs.js",
+  "repository": "git@github.com:scull7/bs-sql-composer.git",
+  "author": "Nathan Sculli <scull7@gmail.com>",
+  "license": "MIT"
+}

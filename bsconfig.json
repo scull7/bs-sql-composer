@@ -1,0 +1,23 @@
+{
+  "name": "bs-sql-common",
+  "version": "0.1.0",
+  "package-specs": {
+    "module": "commonjs",
+    "in-source": true
+  },
+  "suffix": ".bs.js",
+  "sources": [
+    "src",
+    {
+      "dir": "__tests__",
+      "type": "dev"
+    }
+  ],
+  "bs-dev-dependencies": [
+    "@glennsl/bs-jest",
+    "@glennsl/bs-json"
+  ],
+  "bs-dependencies": [],
+  "bsc-flags": [ "-bs-super-errors" ],
+  "refmt": 3
+}
