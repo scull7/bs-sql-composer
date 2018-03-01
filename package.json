@@ -31,6 +31,8 @@
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
     "@glennsl/bs-json": "^1.1.2",
-    "bs-platform": "^2.2.2"
+    "bs-platform": "^2.2.2",
+    "coveralls": "^3.0.0",
+    "nyc": "^11.4.1"
   }
 }
