@@ -29,6 +29,8 @@
   "author": "Nathan Sculli <scull7@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@glennsl/bs-jest": "^0.4.2",
+    "@glennsl/bs-json": "^1.1.2",
     "bs-platform": "^2.2.2"
   }
 }
