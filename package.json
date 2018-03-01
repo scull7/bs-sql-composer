@@ -6,7 +6,7 @@
     "build": "bsb -make-world",
     "clean": "bsb -clean-world",
     "coverage": "nyc report --temp-directory=coverage --reporter=text-lcov | coveralls",
-    "start": "bsb -clean-world ; bsb -make-world -w",
+    "start": " yarn install ; bsb -clean-world ; bsb -make-world -w",
     "test": "bsb -clean-world ; bsb -make-world ; yarn coverage ",
     "watch:test": "jest --coverage --watchAll"
   },
