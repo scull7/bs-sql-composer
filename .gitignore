@@ -29,3 +29,4 @@ setup.log
 tests/test.data
 src/*.js
 __tests__/*.js
+/coverage
