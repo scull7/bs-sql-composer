@@ -157,3 +157,19 @@ SELECT DISTINCT
 FROM test
 WHERE 1=1
 ```
+
+## How do I install it?
+
+Inside of a BuckleScript project:
+
+```shell
+yarn install --save bs-sql-composer
+```
+
+Then add `bs-sql-composer` to your `bs-dependencies` in `bsconfig.json`:
+
+```json
+{
+  "bs-dependencies": [ "bs-sql-composer" ]
+}
+```
