@@ -8,51 +8,152 @@ A library for SQL composition in BucklesScript
 
 ### Basic Select
 ```ocaml
-  let _ = SqlComposer.Query.(
-    from "test"
-    |> Pipe.select "*"
+  let _ = SqlComposer.Select.(
+    select
+    |> field "*"
+    |> from "test"
     |> to_sql
     |> Js.log
   )
 ```
-> "SELECT * FROM test  WHERE 1=1"
+```sql
+SELECT
+  *
+FROM test
+WHERE 1=1
+```
 
 ### Where Clause
 ```ocaml
-  let _ = SqlComposer.Query.(
-    from "test"
-    |> Pipe.select "*"
-    |> Pipe.where "AND test.foo = ?"
+  let _ = SqlComposer.Select.(
+    select
+    |> field "*"
+    |> from "test"
+    |> where "AND test.foo = ?"
     |> to_sql
     |> Js.log
   )
 ```
-> "SELECT * FROM test WHERE 1=1 AND test.foo = ?"
+```sql
+SELECT
+  *
+FROM test
+WHERE 1=1
+AND test.foo = ?
+```
 
 ### Join Clause
 ```ocaml
-  let _ = SqlComposer.Query.(
-    from "test"
-    |> Pipe.select "*"
-    |> Pipe.join "JOIN foo ON test.foo_id = foo.id"
+  let _ = SqlComposer.Select.(
+    select
+    |> field "*"
+    |> from "test"
+    |> join "JOIN foo ON test.foo_id = foo.id"
     |> to_sql
     |> Js.log
   )
 ```
-> "SELECT * FROM test JOIN foo ON test.foo_id = foo.id WHERE 1=1"
+```sql
+SELECT
+  *
+FROM test
+JOIN foo ON test.foo_id = foo.id
+WHERE 1=1
+```
 
 ### Adding to a base query
 ```ocaml
-
-  let _ = SqlComposer.Query.(
+  let _ = SqlComposer.Select.(
     let base_query =
       from "test"
-      |> Pipe.select "foo"
-      |> Pipe.select "bar"
+      |> select "foo"
+      |> select "bar"
     in
     where base_query "AND test.foo = ?"
     |> to_sql
     |> Js.log
   )
 ```
-> "SELECT foo, bar FROM test WHERE 1=1 AND test.foo = ?"
+```sql
+SELECT
+  foo
+, bar
+FROM test
+WHERE 1=1
+AND test.foo = ?
+```
+
+### Alias a field
+```ocaml
+let _ = SqlComposer.Select.(
+  select
+  |> from "test"
+  |> field "foo AS bar"
+  |> to_sql
+  |> Js.log
+)
+```
+```sql
+SELECT
+  foo AS bar
+FROM test
+WHERE 1=1
+```
+
+### Order By
+```ocaml
+let _ = SqlComposer.Select.(
+  select
+  |> from "test"
+  |> field "*"
+  |> order_by (`Asc "foo")
+  |> order_by (`Desc "bar")
+  |> to_sql
+  |> Js.log
+)
+```
+```sql
+SELECT
+  *
+FROM test
+WHERE 1=1
+ORDER BY
+  foo ASC
+, bar DESC
+```
+
+### Group By
+```ocaml
+let _ = SqlComposer.Select.(
+  select
+  |> from "test"
+  |> field "foo AS bar"
+  |> group_by "foo"
+  |> group_by "thing"
+)
+```
+```sql
+SELECT
+  foo AS bar
+FROM test
+WHERE 1=1
+GROUP BY
+  foo
+, thing
+```
+
+### Select Distinct
+```ocaml
+let _ SqlComposer.Select.(
+  select
+  |> field "foo"
+  |> from "test"
+  |> modifier `Distinct
+)
+```
+```sql
+SELECT DISTINCT
+  foo
+FROM test
+WHERE 1=1
+```
