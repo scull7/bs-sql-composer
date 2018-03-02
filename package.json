@@ -23,7 +23,8 @@
       "/node_modules"
     ]
   },
-  "bugs": "https://github.com/scull7/bs-sql-compoers/issues",
+  "bugs": "https://github.com/scull7/bs-sql-composer/issues",
+  "homepage": "https://github.com/scull7/bs-sql-composer",
   "main": "src/SqlComposer.bs.js",
   "repository": "git@github.com:scull7/bs-sql-composer.git",
   "author": "Nathan Sculli <scull7@gmail.com>",
