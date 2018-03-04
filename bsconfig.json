@@ -1,5 +1,5 @@
 {
-  "name": "bs-sql-common",
+  "name": "bs-sql-composer",
   "version": "0.1.0",
   "package-specs": {
     "module": "commonjs",
