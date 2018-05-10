@@ -6,9 +6,16 @@
     "build": "bsb -make-world",
     "clean": "bsb -clean-world",
     "coverage": "nyc report --temp-directory=coverage --reporter=text-lcov | coveralls",
+    "precommit": "lint-staged",
     "start": " yarn install ; bsb -clean-world ; bsb -make-world -w",
     "test": "bsb -clean-world ; bsb -make-world ; jest --coverage ; yarn coverage ",
     "watch:test": "jest --coverage --watchAll"
+  },
+  "lint-staged": {
+    "*.{re,rei}": [
+      "refmt --in-place",
+      "git add"
+    ]
   },
   "keywords": [
     "BuckleScript",
@@ -34,6 +41,8 @@
     "@glennsl/bs-json": "^1.1.2",
     "bs-platform": "^2.2.2",
     "coveralls": "^3.0.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.1.0",
     "nyc": "^11.4.1"
   }
 }
