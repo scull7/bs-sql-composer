@@ -7,14 +7,14 @@ A library for SQL composition in BucklesScript
 ## Usage
 
 ### Basic Select
-```ocaml
-  let _ = SqlComposer.Select.(
+```reason
+  SqlComposer.Select.(
     select
-    |> field "*"
-    |> from "test"
-    |> to_sql
-    |> Js.log
-  )
+    |. field("*")
+    |. from("test")
+    |. to_sql
+    |. Js.log
+  );
 ```
 ```sql
 SELECT
@@ -24,15 +24,15 @@ WHERE 1=1
 ```
 
 ### Where Clause
-```ocaml
-  let _ = SqlComposer.Select.(
+```reason
+  SqlComposer.Select.(
     select
-    |> field "*"
-    |> from "test"
-    |> where "AND test.foo = ?"
-    |> to_sql
-    |> Js.log
-  )
+    |. field("*")
+    |. from("test")
+    |. where("AND test.foo = ?")
+    |. to_sql
+    |. Js.log
+  );
 ```
 ```sql
 SELECT
@@ -43,14 +43,14 @@ AND test.foo = ?
 ```
 
 ### Join Clause
-```ocaml
-  let _ = SqlComposer.Select.(
+```reasons
+  SqlComposer.Select.(
     select
-    |> field "*"
-    |> from "test"
-    |> join "JOIN foo ON test.foo_id = foo.id"
-    |> to_sql
-    |> Js.log
+    |. field("*")
+    |. from("test")
+    |. join("JOIN foo ON test.foo_id = foo.id")
+    |. to_sql
+    |. Js.log
   )
 ```
 ```sql
@@ -62,17 +62,20 @@ WHERE 1=1
 ```
 
 ### Adding to a base query
-```ocaml
-  let _ = SqlComposer.Select.(
-    let base_query =
-      from "test"
-      |> select "foo"
-      |> select "bar"
-    in
-    where base_query "AND test.foo = ?"
-    |> to_sql
-    |> Js.log
-  )
+```reason
+  let base_query = SqlComposer.Select.(
+    select
+    |. from("test")
+    |. field("foo")
+    |. field("bar")
+  );
+
+  SqlComposer.Select.(
+    base_query
+    |. where("AND test.foo = ?")
+    |. to_sql
+    |. Js.log
+  );
 ```
 ```sql
 SELECT
@@ -84,14 +87,14 @@ AND test.foo = ?
 ```
 
 ### Alias a field
-```ocaml
-let _ = SqlComposer.Select.(
+```reason
+SqlComposer.Select.(
   select
-  |> from "test"
-  |> field "foo AS bar"
-  |> to_sql
-  |> Js.log
-)
+  |. from("test")
+  |. field("foo AS bar")
+  |. to_sql
+  |. Js.log
+);
 ```
 ```sql
 SELECT
@@ -102,15 +105,15 @@ WHERE 1=1
 
 ### Order By
 ```ocaml
-let _ = SqlComposer.Select.(
+SqlComposer.Select.(
   select
-  |> from "test"
-  |> field "*"
-  |> order_by (`Asc "foo")
-  |> order_by (`Desc "bar")
-  |> to_sql
-  |> Js.log
-)
+  |. from("test")
+  |. field("*")
+  |. order_by(`Asc("foo"))
+  |. order_by(`Desc("bar"))
+  |. to_sql
+  |. Js.log
+);
 ```
 ```sql
 SELECT
@@ -123,14 +126,14 @@ ORDER BY
 ```
 
 ### Group By
-```ocaml
-let _ = SqlComposer.Select.(
+```reason
+SqlComposer.Select.(
   select
-  |> from "test"
-  |> field "foo AS bar"
-  |> group_by "foo"
-  |> group_by "thing"
-)
+  |. from("test")
+  |. field("foo AS bar")
+  |. group_by("foo")
+  |. group_by("thing")
+);
 ```
 ```sql
 SELECT
@@ -143,13 +146,13 @@ GROUP BY
 ```
 
 ### Select Distinct
-```ocaml
-let _ SqlComposer.Select.(
+```reason
+SqlComposer.Select.(
   select
-  |> field "foo"
-  |> from "test"
-  |> modifier `Distinct
-)
+  |. field("foo")
+  |. from("test")
+  |. modifier(`Distinct)
+);
 ```
 ```sql
 SELECT DISTINCT

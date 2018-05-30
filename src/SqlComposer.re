@@ -21,7 +21,17 @@ module Select = {
     limit: [],
   };
 
-  let modifier = (flag, query) => {
+  type flag = [
+    | `Distinct
+    | `HighPriority
+    | `StraightJoin
+    | `MySqlNoCache
+    | `MySqlCalcFoundRows
+  ];
+
+  type ord = [ | `Asc(string) | `Desc(string)];
+
+  let modifier = (query, flag) => {
     let modifier =
       switch (flag) {
       | `Distinct => "DISTINCT"
@@ -40,26 +50,26 @@ module Select = {
     {...query, modifier: Js.Option.some(setting)};
   };
 
-  let field = (statement, query) => {
+  let field = (query, statement) => {
     let compiled =
       Belt_List.length(query.fields) > 0 ?
         {j|  , $statement|j} : {j|  $statement|j};
     {...query, fields: [compiled, ...query.fields]};
   };
 
-  let from = (table, query) => {...query, from: [{j|FROM $table|j}]};
+  let from = (query, table) => {...query, from: [{j|FROM $table|j}]};
 
-  let join = (statement, query) => {
+  let join = (query, statement) => {
     ...query,
     join: [statement, ...query.join],
   };
 
-  let where = (statement, query) => {
+  let where = (query, statement) => {
     ...query,
     where: [statement, ...query.where],
   };
 
-  let group_by = (statement, query) => {
+  let group_by = (query, statement) => {
     let group_by =
       Belt.List.length(query.group_by) < 1 ?
         [{j|  $statement|j}, "GROUP BY"] :
@@ -67,7 +77,7 @@ module Select = {
     {...query, group_by};
   };
 
-  let order_by = (field, query) => {
+  let order_by = (query, field) => {
     let clause =
       switch (field) {
       | `Asc(f) => {j|$f ASC|j}
@@ -79,7 +89,7 @@ module Select = {
     {...query, order_by};
   };
 
-  let limit = (~offset=?, ~row_count, query) => {
+  let limit = (query, ~offset=?, ~row_count) => {
     let statement =
       switch (offset) {
       | Some(x) => {j|LIMIT $row_count OFFSET $x|j}

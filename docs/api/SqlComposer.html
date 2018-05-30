@@ -1,0 +1,141 @@
+
+    
+<!doctype html>
+<meta charset=utf8>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel=stylesheet href='../styles.css'>
+<script defer src='../script.js'></script>
+<title>SqlComposer</title>
+<body>
+<script>window.relativeToRoot=".."</script>
+<script defer src="../block-script.js"></script>
+<div id='error-message'>
+  ⚠️ Oops! This page doesn't appear to define a <span>type</span> called <code>_</code>.
+</div>
+
+    <script>window.shouldCheckHashes=true</script>
+    <div class='container'>
+    
+    <div class='sidebar-wrapper'>
+    <div class='sidebar-expander'>Show navigation</div>
+    <div class='sidebar'>
+      <a href="../search.html" style="display: block; padding: 0 8px;">Search</a>
+      
+      <div class='docs-listing'><a href="../index.html">Home</a></div>
+      <div class='toc-header'>Page Contents</div>
+      <div class='table-of-contents'>
+      <a href="#SqlComposer" class='level-1 header'>SqlComposer</a>
+<a href="#module-Select" class='level-2 module'>Select</a>
+<a href="#SqlComposer.Select" class='level-4 header'>SqlComposer.Select</a>
+<a href="#type-Select.t" class='level-5 type'>t</a>
+<a href="#type-Select.flag" class='level-5 type'>flag</a>
+<a href="#type-Select.ord" class='level-5 type'>ord</a>
+<a href="#value-Select.select" class='level-5 value'>select</a>
+<a href="#value-Select.modifier" class='level-5 value'>modifier</a>
+<a href="#value-Select.field" class='level-5 value'>field</a>
+<a href="#value-Select.from" class='level-5 value'>from</a>
+<a href="#value-Select.join" class='level-5 value'>join</a>
+<a href="#value-Select.where" class='level-5 value'>where</a>
+<a href="#value-Select.group_by" class='level-5 value'>group_by</a>
+<a href="#value-Select.order_by" class='level-5 value'>order_by</a>
+<a href="#value-Select.limit" class='level-5 value'>limit</a>
+<a href="#value-Select.to_sql" class='level-5 value'>to_sql</a>
+      </div>
+      <div class='project-title'>Package modules</div><div class='project-listing'><a href="SqlComposer.html">SqlComposer</a></div>
+    </div>
+    </div>
+  
+    <div class='main'>
+    
+    <a href="#SqlComposer" id="SqlComposer"><h1>SqlComposer</h1></a><p style='font-style:italic'>other items defined</p><div class='doc-item'><h4 class='item module'>module <a href="#module-Select" id="module-Select">Select</a></h4><div class='body module-body'><a href="#SqlComposer.Select" id="SqlComposer.Select"><h1>SqlComposer.Select</h1></a>
+
+<p>Generate composable SQL Select queries and query fragments.</p>
+<p>Here is a basic example:</p>
+<div class='code-block' data-block-syntax="re">
+  
+  <pre class='code' data-block-id='7' id='block-7'><code>let <span class='pattern-ident' data-type="string">sql</span> =
+  SqlComposer.Select.(
+    <span class='ident' data-type="SqlComposer.Select.t">select</span>
+    |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span>(<span class='string' data-type="string">&quot;*&quot;</span>)
+    |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span>(<span class='string' data-type="string">&quot;test&quot;</span>)
+    |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">where</span>(<span class='string' data-type="string">&quot;AND test.foo = ?&quot;</span>)
+    |. <span class='ident' data-type="SqlComposer.Select.t => string">to_sql</span>
+  );
+<span class='ident' data-type="(string, string) => unit">Js.log2</span>(<span class='string' data-type="string">&quot;SQL: &quot;</span>, <span class='ident' data-type="string">sql</span>);</code></pre>
+  
+  
+  
+</div><div class='code-block' data-block-syntax="ml">
+  
+  <pre class='code' data-block-id='7-alt' id='block-7-alt'><code>[@@@ocaml.ppx.context { cookies = [] }]
+open SqlComposer
+let <span class='pattern-ident' data-type="string">sql</span> =
+  let open SqlComposer.Select in
+    (((<span class='ident' data-type="SqlComposer.Select.t">select</span> |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span> ((&quot;*&quot;)[@reason.raw_literal &quot;*&quot;]))) |.
+        (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span> ((&quot;test&quot;)[@reason.raw_literal &quot;test&quot;])))
+       |.
+       (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">where</span> ((&quot;AND test.foo = ?&quot;)[@reason.raw_literal &quot;AND test.foo = ?&quot;])))
+      |. <span class='ident' data-type="SqlComposer.Select.t => string">to_sql</span>
+let _ = <span class='ident' data-type="(string, string) => unit">Js.log2</span> ((&quot;SQL: &quot;)[@reason.raw_literal &quot;SQL: &quot;]) <span class='ident' data-type="string">sql</span></code></pre>
+  
+  
+  
+</div><p style='font-style:italic'>other items defined</p><div class='doc-item'><h4 class='item'>type <a href="#type-Select.t" id="type-Select.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>type <a href="#type-Select.flag" id="type-Select.flag">flag</a> = [ `MySqlCalcFoundRows
+| `MySqlNoCache
+| `HighPriority
+| `Distinct
+| `StraightJoin ]</h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>type <a href="#type-Select.ord" id="type-Select.ord">ord</a> = [ `Asc of string | `Desc of string ]</h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Select.select" id="value-Select.select">select</a>: <a href="#type-Select.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Select.modifier" id="value-Select.modifier">modifier</a>: (<a href="#type-Select.t">t</a>, <a href="#type-Select.flag">flag</a>) => <a href="#type-Select.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Select.field" id="value-Select.field">field</a>: (<a href="#type-Select.t">t</a>, string) => <a href="#type-Select.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Select.from" id="value-Select.from">from</a>: (<a href="#type-Select.t">t</a>, string) => <a href="#type-Select.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Select.join" id="value-Select.join">join</a>: (<a href="#type-Select.t">t</a>, string) => <a href="#type-Select.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Select.where" id="value-Select.where">where</a>: (<a href="#type-Select.t">t</a>, string) => <a href="#type-Select.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Select.group_by" id="value-Select.group_by">group_by</a>: (<a href="#type-Select.t">t</a>, string) => <a href="#type-Select.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Select.order_by" id="value-Select.order_by">order_by</a>: (<a href="#type-Select.t">t</a>, <a href="#type-Select.ord">ord</a>) => <a href="#type-Select.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Select.limit" id="value-Select.limit">limit</a>: (<a href="#type-Select.t">t</a>, ~?offset: option(int), ~row_count: int) => <a href="#type-Select.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Select.to_sql" id="value-Select.to_sql">to_sql</a>: <a href="#type-Select.t">t</a> => string</h4>
+
+<div class='body body-empty'></div></div></div></div>
+    </div>
+    <div class='right-blank'></div>
+    </div>
+  
