@@ -6,6 +6,7 @@
     "build": "bsb -make-world",
     "clean": "bsb -clean-world",
     "coverage": "nyc report --temp-directory=coverage --reporter=text-lcov | coveralls",
+    "format": "bsrefmt --in-place",
     "precommit": "lint-staged",
     "start": " yarn install ; bsb -clean-world ; bsb -make-world -w",
     "test": "bsb -clean-world ; bsb -make-world ; jest --coverage ; yarn coverage ",
@@ -13,7 +14,7 @@
   },
   "lint-staged": {
     "*.{re,rei}": [
-      "refmt --in-place",
+      "yarn format",
       "git add"
     ]
   },
@@ -38,11 +39,11 @@
   "license": "MIT",
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
-    "@glennsl/bs-json": "^1.1.2",
-    "bs-platform": "^2.2.2",
-    "coveralls": "^3.0.0",
+    "@glennsl/bs-json": "^2.0.0",
+    "bs-platform": "^3.1.5",
+    "coveralls": "^3.0.1",
     "husky": "^0.14.3",
-    "lint-staged": "^7.1.0",
-    "nyc": "^11.4.1"
+    "lint-staged": "^7.1.2",
+    "nyc": "^11.8.0"
   }
 }
