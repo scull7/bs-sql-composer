@@ -1,0 +1,8 @@
+SELECT
+  foo AS bar
+FROM test
+WHERE 1=1
+ORDER BY
+  foo ASC
+, bar DESC
+LIMIT 10 OFFSET 2

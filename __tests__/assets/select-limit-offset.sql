@@ -1,0 +1,5 @@
+SELECT
+  foo AS bar
+FROM test
+WHERE 1=1
+LIMIT 10 OFFSET 2

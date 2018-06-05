@@ -28,7 +28,8 @@
   ],
   "jest": {
     "testPathIgnorePatterns": [
-      "/node_modules"
+      "/node_modules",
+      "/__tests__/assets/*"
     ]
   },
   "bugs": "https://github.com/scull7/bs-sql-composer/issues",
