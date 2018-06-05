@@ -24,6 +24,9 @@ WHERE 1=1
 ```
 
 ### Where Clause
+There is an implicit `WHERE 1=1` added to every query.  This is done to
+eliminate confusion with compound queries regarding the concatenation of
+where clauses.  
 ```reason
   SqlComposer.Select.(
     select
