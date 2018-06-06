@@ -10,6 +10,7 @@
     "precommit": "lint-staged",
     "start": " yarn install ; bsb -clean-world ; bsb -make-world -w",
     "test": "bsb -clean-world ; bsb -make-world ; jest --coverage ; yarn coverage ",
+    "test:no-report": "bsb -clean-world ; bsb -make-world ; jest --coverage",
     "watch:test": "jest --coverage --watchAll"
   },
   "lint-staged": {
