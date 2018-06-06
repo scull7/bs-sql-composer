@@ -1,0 +1,8 @@
+pages:
+  script:
+  - git clone https://github.com/jaredly/redoc.git /opt/redoc
+  - npm install --prefix /opt/redoc
+  - /opt/redoc/redoc.sh
+  artifacts:
+    paths:
+    - /docs
