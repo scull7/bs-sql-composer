@@ -3,4 +3,4 @@ pages:
   - echo "USING PRE-BUILT DOCS"
   artifacts:
     paths:
-    - /docs
+    - docs
