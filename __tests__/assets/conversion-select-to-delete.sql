@@ -1,0 +1,8 @@
+DELETE QUICK
+FROM test
+WHERE 1=1
+AND foo = ?
+AND bar = ?
+ORDER BY
+  moo ASC
+LIMIT 10

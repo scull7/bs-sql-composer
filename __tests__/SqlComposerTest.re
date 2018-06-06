@@ -28,6 +28,61 @@ let genFileTest = (name, file, sqlGenerator) =>
     },
   );
 
+describe("Delete Interface", () => {
+  genFileTest("A basic delete", "delete-basic", () =>
+    SqlComposer.Delete.(
+      make() |. from("test") |. where("AND foo = ?") |. toSql
+    )
+  );
+
+  genFileTest("ignore errors", "delete-ignore", () =>
+    SqlComposer.Delete.(
+      make()
+      |. from("test")
+      |. modifier(`Ignore)
+      |. where("AND foo = ?")
+      |. toSql
+    )
+  );
+
+  genFileTest("low priority", "delete-low-priority", () =>
+    SqlComposer.Delete.(
+      make()
+      |. from("test")
+      |. modifier(`LowPriority)
+      |. where("AND foo = ?")
+      |. toSql
+    )
+  );
+
+  genFileTest("order by", "delete-order-by", () =>
+    SqlComposer.Delete.(
+      make()
+      |. from("test")
+      |. where("AND foo = ?")
+      |. orderBy(`Desc("bar"))
+      |. toSql
+    )
+  );
+
+  genFileTest("limit", "delete-limit", () =>
+    SqlComposer.Delete.(
+      make()
+      |. from("test")
+      |. where("AND foo = ?")
+      |. orderBy(`Desc("bar"))
+      |. limit(~offset=?None, ~row_count=1)
+      |. toSql
+    )
+  );
+
+  genFileTest("partial", "delete-partial", () =>
+    SqlComposer.Delete.(
+      make() |. from("test") |. limit(~offset=2, ~row_count=1) |. toSql
+    )
+  );
+});
+
 describe("Select Interface", () => {
   genFileTest("A basic query", "select-basic", () =>
     SqlComposer.Select.(make() |. from("test") |. field("*") |. toSql)
@@ -333,7 +388,7 @@ describe("Update Interface", () => {
   );
 });
 
-describe("Conversion Inteface", () =>
+describe("Conversion Inteface", () => {
   genFileTest("Select to Update", "conversion-select-to-update", () => {
     let select =
       SqlComposer.Select.(
@@ -348,5 +403,21 @@ describe("Conversion Inteface", () =>
     SqlComposer.Conversion.updateFromSelect(select)
     |. SqlComposer.Update.set("foo", "?")
     |. SqlComposer.Update.toSql;
-  })
-);
+  });
+
+  genFileTest("Select to Delete", "conversion-select-to-delete", () => {
+    let select =
+      SqlComposer.Select.(
+        make()
+        |. from("test")
+        |. join("JOIN animal ON test.animal_id = animal.id")
+        |. where({|AND foo = ?|})
+        |. where({|AND bar = ?|})
+        |. orderBy(`Asc("moo"))
+        |. limit(~row_count=10, ~offset=?None)
+      );
+    SqlComposer.Conversion.deleteFromSelect(select)
+    |. SqlComposer.Delete.modifier(`Quick)
+    |. SqlComposer.Delete.toSql;
+  });
+});

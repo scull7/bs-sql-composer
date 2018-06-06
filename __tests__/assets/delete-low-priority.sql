@@ -1,0 +1,4 @@
+DELETE LOW_PRIORITY
+FROM test
+WHERE 1=1
+AND foo = ?

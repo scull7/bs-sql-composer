@@ -3,6 +3,34 @@
  *
  */;
 
+module Delete: {
+  /**
+   *  # SqlComposer.Delete
+   *
+   * Generate composable SQL Delete queries and query fragments.
+   *
+   * Here is a basic example:
+   * ```reason
+   * let sql =
+   *   SqlComposer.Delete.(
+   *     make()
+   *     |. from("test")
+   *     |. where("AND test.foo = ?")
+   *     |. toSql
+   *   );
+   * Js.log2("SQL: ", sql);
+   *````
+   */;
+  type t;
+  let make: unit => t;
+  let modifier: (t, [ | `LowPriority | `Quick | `Ignore]) => t;
+  let from: (t, string) => t;
+  let where: (t, string) => t;
+  let orderBy: (t, [ | `Asc(string) | `Desc(string)]) => t;
+  let limit: (t, ~offset: int=?, ~row_count: int) => t;
+  let toSql: t => string;
+};
+
 module Select: {
   /**
    *  # SqlComposer.Select
@@ -23,9 +51,7 @@ module Select: {
    *````
    */;
   type t;
-
   let make: unit => t;
-
   let modifier:
     (
       t,
@@ -38,21 +64,13 @@ module Select: {
       ]
     ) =>
     t;
-
   let field: (t, string) => t;
-
   let from: (t, string) => t;
-
   let join: (t, string) => t;
-
   let where: (t, string) => t;
-
   let groupBy: (t, string) => t;
-
   let orderBy: (t, [ | `Asc(string) | `Desc(string)]) => t;
-
   let limit: (t, ~offset: int=?, ~row_count: int) => t;
-
   let toSql: t => string;
 };
 
@@ -77,24 +95,18 @@ module Update: {
    * ```
    */;
   type t;
-
   let make: unit => t;
-
   let modifier: (t, [ | `Ignore | `LowPriority]) => t;
-
   let from: (t, string) => t;
-
   let join: (t, string) => t;
-
   let set: (t, string, string) => t;
-
   let where: (t, string) => t;
-
   let orderBy: (t, [ | `Asc(string) | `Desc(string)]) => t;
-
   let limit: (t, ~offset: int=?, ~row_count: int) => t;
-
   let toSql: t => string;
 };
 
-module Conversion: {let updateFromSelect: Select.t => Update.t;};
+module Conversion: {
+  let updateFromSelect: Select.t => Update.t;
+  let deleteFromSelect: Select.t => Delete.t;
+};

@@ -1,0 +1,4 @@
+DELETE
+FROM test
+WHERE 1=1
+AND foo = ?
