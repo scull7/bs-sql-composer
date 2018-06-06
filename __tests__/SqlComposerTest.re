@@ -332,3 +332,21 @@ describe("Update Interface", () => {
     )
   );
 });
+
+describe("Conversion Inteface", () =>
+  genFileTest("Select to Update", "conversion-select-to-update", () => {
+    let select =
+      SqlComposer.Select.(
+        make()
+        |. from("test")
+        |. join("JOIN animal ON test.animal_id = animal.id")
+        |. where({|AND cow = "moo"|})
+        |. where({|AND dog = "bark"|})
+        |. orderBy(`Asc("cat"))
+        |. limit(~offset=5, ~row_count=10)
+      );
+    SqlComposer.Conversion.updateFromSelect(select)
+    |. SqlComposer.Update.set("foo", "?")
+    |. SqlComposer.Update.toSql;
+  })
+);

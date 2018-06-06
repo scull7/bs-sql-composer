@@ -1,5 +1,7 @@
 open SqlComposer_component;
 
+module Select = SqlComposer_select;
+
 module Modifier =
   Modifier({
     type flag = [ | `LowPriority | `Ignore];
@@ -28,6 +30,17 @@ let make = () => {
   where: None,
   orderBy: None,
   limit: None,
+};
+
+let assemble =
+    (~modifier=?, ~from=?, ~join=?, ~set=?, ~where=?, ~orderBy=?, ~limit=?, _) => {
+  modifier,
+  from,
+  join,
+  set,
+  where,
+  orderBy,
+  limit,
 };
 
 let modifier = (query, flag) => {

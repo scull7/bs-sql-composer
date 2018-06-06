@@ -14,6 +14,7 @@ module From: {
   type t;
   let make: string => t;
   let render: option(t) => option(string);
+  let raw: option(t) => option(string);
 };
 
 module GroupBy: {

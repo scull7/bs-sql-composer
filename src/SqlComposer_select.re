@@ -95,3 +95,13 @@ let toSql = ({modifier, fields, from, join, where, orderBy, groupBy, limit}) => 
   |. Belt.List.map(Belt.Option.getExn)
   |. (x => String.concat("\n", x) |. (x => prefix ++ x));
 };
+
+let getFrom = ({from}: t) => from;
+
+let getWhere = ({where}: t) => where;
+
+let getJoin = ({join}: t) => join;
+
+let getOrderBy = ({orderBy}: t) => orderBy;
+
+let getLimit = ({limit}: t) => limit;

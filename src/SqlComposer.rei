@@ -96,3 +96,5 @@ module Update: {
 
   let toSql: t => string;
 };
+
+module Conversion: {let updateFromSelect: Select.t => Update.t;};

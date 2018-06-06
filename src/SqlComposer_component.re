@@ -47,6 +47,7 @@ module From = {
   type t = string;
   let make = string : t => string;
   let render = maybe => Belt.Option.map(maybe, t => {j|FROM $t|j});
+  let raw = maybe => Belt.Option.map(maybe, t => t);
 };
 
 module GroupBy =
