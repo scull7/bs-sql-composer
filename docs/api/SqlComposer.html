@@ -25,6 +25,16 @@
       <div class='toc-header'>Page Contents</div>
       <div class='table-of-contents'>
       <a href="#SqlComposer" class='level-1 header'>SqlComposer</a>
+<a href="#module-Delete" class='level-2 module'>Delete</a>
+<a href="#SqlComposer.Delete" class='level-4 header'>SqlComposer.Delete</a>
+<a href="#type-Delete.t" class='level-5 type'>t</a>
+<a href="#value-Delete.make" class='level-5 value'>make</a>
+<a href="#value-Delete.modifier" class='level-5 value'>modifier</a>
+<a href="#value-Delete.from" class='level-5 value'>from</a>
+<a href="#value-Delete.where" class='level-5 value'>where</a>
+<a href="#value-Delete.orderBy" class='level-5 value'>orderBy</a>
+<a href="#value-Delete.limit" class='level-5 value'>limit</a>
+<a href="#value-Delete.toSql" class='level-5 value'>toSql</a>
 <a href="#module-Select" class='level-2 module'>Select</a>
 <a href="#SqlComposer.Select" class='level-4 header'>SqlComposer.Select</a>
 <a href="#type-Select.t" class='level-5 type'>t</a>
@@ -52,10 +62,12 @@
 <a href="#value-Update.toSql" class='level-5 value'>toSql</a>
 <a href="#module-Conversion" class='level-2 module'>Conversion</a>
 <a href="#value-Conversion.updateFromSelect" class='level-3 value'>updateFromSelect</a>
+<a href="#value-Conversion.deleteFromSelect" class='level-3 value'>deleteFromSelect</a>
       </div>
       <div class='project-title'>Package modules</div><div class='project-listing'><a href="SqlComposer.html">SqlComposer</a>
 <a href="SqlComposer_component.html">SqlComposer_component</a>
 <a href="SqlComposer_conversion.html">SqlComposer_conversion</a>
+<a href="SqlComposer_delete.html">SqlComposer_delete</a>
 <a href="SqlComposer_select.html">SqlComposer_select</a>
 <a href="SqlComposer_update.html">SqlComposer_update</a></div>
     </div>
@@ -63,13 +75,75 @@
   
     <div class='main'>
     
-    <a href="#SqlComposer" id="SqlComposer"><h1>SqlComposer</h1></a><p style='font-style:italic'>other items defined</p><div class='doc-item'><h4 class='item module'>module <a href="#module-Select" id="module-Select">Select</a></h4><div class='body module-body'><a href="#SqlComposer.Select" id="SqlComposer.Select"><h1>SqlComposer.Select</h1></a>
+    <a href="#SqlComposer" id="SqlComposer"><h1>SqlComposer</h1></a><p style='font-style:italic'>other items defined</p><div class='doc-item'><h4 class='item module'>module <a href="#module-Delete" id="module-Delete">Delete</a></h4><div class='body module-body'><a href="#SqlComposer.Delete" id="SqlComposer.Delete"><h1>SqlComposer.Delete</h1></a>
+
+<p>Generate composable SQL Delete queries and query fragments.</p>
+<p>Here is a basic example:</p>
+<div class='code-block' data-block-syntax="re">
+  
+  <pre class='code' data-block-id='6' id='block-6'><code>let <span class='pattern-ident' data-type="string">sql</span> =
+  SqlComposer.Delete.(
+    <span class='ident' data-type="unit => SqlComposer.Delete.t">make</span><span class='constructor' data-type="unit">()</span>
+    |. <span class='ident' data-type="(SqlComposer.Delete.t, string) => SqlComposer.Delete.t">from</span>(<span class='string' data-type="string">&quot;test&quot;</span>)
+    |. <span class='ident' data-type="(SqlComposer.Delete.t, string) => SqlComposer.Delete.t">where</span>(<span class='string' data-type="string">&quot;AND test.foo = ?&quot;</span>)
+    |. <span class='ident' data-type="SqlComposer.Delete.t => string">toSql</span>
+  );
+<span class='ident' data-type="(string, string) => unit">Js.log2</span>(<span class='string' data-type="string">&quot;SQL: &quot;</span>, <span class='ident' data-type="string">sql</span>);</code></pre>
+  
+  
+  
+</div><div class='code-block' data-block-syntax="ml">
+  
+  <pre class='code' data-block-id='6-alt' id='block-6-alt'><code>[@@@ocaml.ppx.context { cookies = [] }]
+open SqlComposer
+let <span class='pattern-ident' data-type="string">sql</span> =
+  let open SqlComposer.Delete in
+    (((<span class='ident' data-type="unit => SqlComposer.Delete.t">make</span> <span class='constructor' data-type="unit">()</span>) |. (<span class='ident' data-type="(SqlComposer.Delete.t, string) => SqlComposer.Delete.t">from</span> ((&quot;test&quot;)[@reason.raw_literal &quot;test&quot;]))) |.
+       (<span class='ident' data-type="(SqlComposer.Delete.t, string) => SqlComposer.Delete.t">where</span> ((&quot;AND test.foo = ?&quot;)[@reason.raw_literal &quot;AND test.foo = ?&quot;])))
+      |. <span class='ident' data-type="SqlComposer.Delete.t => string">toSql</span>
+let _ = <span class='ident' data-type="(string, string) => unit">Js.log2</span> ((&quot;SQL: &quot;)[@reason.raw_literal &quot;SQL: &quot;]) <span class='ident' data-type="string">sql</span></code></pre>
+  
+  
+  
+</div><p style='font-style:italic'>other items defined</p><div class='doc-item'><h4 class='item'>type <a href="#type-Delete.t" id="type-Delete.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Delete.make" id="value-Delete.make">make</a>: unit => <a href="#type-Delete.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Delete.modifier" id="value-Delete.modifier">modifier</a>: (<a href="#type-Delete.t">t</a>, [ `Quick | `LowPriority | `Ignore ]) => <a href="#type-Delete.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Delete.from" id="value-Delete.from">from</a>: (<a href="#type-Delete.t">t</a>, string) => <a href="#type-Delete.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Delete.where" id="value-Delete.where">where</a>: (<a href="#type-Delete.t">t</a>, string) => <a href="#type-Delete.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Delete.orderBy" id="value-Delete.orderBy">orderBy</a>: (<a href="#type-Delete.t">t</a>, [ `Asc of string | `Desc of string ]) => <a href="#type-Delete.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Delete.limit" id="value-Delete.limit">limit</a>: (<a href="#type-Delete.t">t</a>, ~?offset: option(int), ~row_count: int) => <a href="#type-Delete.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Delete.toSql" id="value-Delete.toSql">toSql</a>: <a href="#type-Delete.t">t</a> => string</h4>
+
+<div class='body body-empty'></div></div></div></div>
+
+<div class='doc-item'><h4 class='item module'>module <a href="#module-Select" id="module-Select">Select</a></h4><div class='body module-body'><a href="#SqlComposer.Select" id="SqlComposer.Select"><h1>SqlComposer.Select</h1></a>
 
 <p>Generate composable SQL Select queries and query fragments.</p>
 <p>Here is a basic example:</p>
 <div class='code-block' data-block-syntax="re">
   
-  <pre class='code' data-block-id='6' id='block-6'><code>let <span class='pattern-ident' data-type="string">sql</span> =
+  <pre class='code' data-block-id='7' id='block-7'><code>let <span class='pattern-ident' data-type="string">sql</span> =
   SqlComposer.Select.(
     <span class='ident' data-type="unit => SqlComposer.Select.t">make</span><span class='constructor' data-type="unit">()</span>
     |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span>(<span class='string' data-type="string">&quot;*&quot;</span>)
@@ -83,7 +157,7 @@
   
 </div><div class='code-block' data-block-syntax="ml">
   
-  <pre class='code' data-block-id='6-alt' id='block-6-alt'><code>[@@@ocaml.ppx.context { cookies = [] }]
+  <pre class='code' data-block-id='7-alt' id='block-7-alt'><code>[@@@ocaml.ppx.context { cookies = [] }]
 open SqlComposer
 let <span class='pattern-ident' data-type="string">sql</span> =
   let open SqlComposer.Select in
@@ -153,7 +227,7 @@ let _ = <span class='ident' data-type="(string, string) => unit">Js.log2</span> 
 <p>Here is a basic example:</p>
 <div class='code-block' data-block-syntax="re">
   
-  <pre class='code' data-block-id='7' id='block-7'><code>let <span class='pattern-ident' data-type="string">sql</span> =
+  <pre class='code' data-block-id='8' id='block-8'><code>let <span class='pattern-ident' data-type="string">sql</span> =
   SqlComposer.Update.(
     <span class='ident' data-type="unit => SqlComposer.Update.t">make</span><span class='constructor' data-type="unit">()</span>
     |. <span class='ident' data-type="(SqlComposer.Update.t, string) => SqlComposer.Update.t">from</span>(<span class='string' data-type="string">&quot;test&quot;</span>)
@@ -176,7 +250,7 @@ let _ = <span class='ident' data-type="(string, string) => unit">Js.log2</span> 
   
 </div><div class='code-block' data-block-syntax="ml">
   
-  <pre class='code' data-block-id='7-alt' id='block-7-alt'><code>[@@@ocaml.ppx.context { cookies = [] }]
+  <pre class='code' data-block-id='8-alt' id='block-8-alt'><code>[@@@ocaml.ppx.context { cookies = [] }]
 open SqlComposer
 let <span class='pattern-ident' data-type="string">sql</span> =
   let open SqlComposer.Update in
@@ -242,6 +316,10 @@ let _ = <span class='ident' data-type="(string, string) => unit">Js.log2</span> 
 
 <div class='doc-item'><h4 class='item module'>module <a href="#module-Conversion" id="module-Conversion">Conversion</a></h4><div class='body module-body'><p><span class='missing'>This module does not have a toplevel documentation block.</span></p>
 <div class='doc-item'><h4 class='item'>let <a href="#value-Conversion.updateFromSelect" id="value-Conversion.updateFromSelect">updateFromSelect</a>: <a href="#module-Select">Select</a>.<a href="#type-Select.t">t</a> => <a href="#module-Update">Update</a>.<a href="#type-Update.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Conversion.deleteFromSelect" id="value-Conversion.deleteFromSelect">deleteFromSelect</a>: <a href="#module-Select">Select</a>.<a href="#type-Select.t">t</a> => <a href="#module-Delete">Delete</a>.<a href="#type-Delete.t">t</a></h4>
 
 <div class='body body-empty'></div></div>
 </div></div>
