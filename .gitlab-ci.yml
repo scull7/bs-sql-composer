@@ -1,7 +1,21 @@
+image: node
+cache:
+  paths:
+  - node_modules/
+  
+stages:
+  - test
+  
+test:
+  stage: test
+  script:
+  - npm install
+  - npm test
+  
 pages:
   script:
   - echo "USING PRE-BUILT DOCS"
-  - mv docs public
+  - mv docs/ public/
   artifacts:
     paths:
     - public
