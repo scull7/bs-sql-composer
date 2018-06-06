@@ -1,6 +1,6 @@
 pages:
   script
-  - echo \"USING PRE-BUILT SITE\"
+  - echo USING PRE-BUILT SITE
   artifacts:
     paths:
     - /docs
