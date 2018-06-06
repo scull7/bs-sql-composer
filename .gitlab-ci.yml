@@ -1,11 +1,5 @@
 image: node
 pages:
-  script:
-  - npm install --prefix /opt bs-platform
-  - ln -s /opt/node_modules/.bin/bsb /usr/local/bin/bsb
-  - git clone https://github.com/jaredly/redoc.git /opt/redoc
-  - npm install --prefix /opt/redoc
-  - /opt/redoc/redoc.sh
   artifacts:
     paths:
     - /docs
