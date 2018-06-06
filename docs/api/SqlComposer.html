@@ -28,20 +28,33 @@
 <a href="#module-Select" class='level-2 module'>Select</a>
 <a href="#SqlComposer.Select" class='level-4 header'>SqlComposer.Select</a>
 <a href="#type-Select.t" class='level-5 type'>t</a>
-<a href="#type-Select.flag" class='level-5 type'>flag</a>
-<a href="#type-Select.ord" class='level-5 type'>ord</a>
-<a href="#value-Select.select" class='level-5 value'>select</a>
+<a href="#value-Select.make" class='level-5 value'>make</a>
 <a href="#value-Select.modifier" class='level-5 value'>modifier</a>
 <a href="#value-Select.field" class='level-5 value'>field</a>
 <a href="#value-Select.from" class='level-5 value'>from</a>
 <a href="#value-Select.join" class='level-5 value'>join</a>
 <a href="#value-Select.where" class='level-5 value'>where</a>
-<a href="#value-Select.group_by" class='level-5 value'>group_by</a>
-<a href="#value-Select.order_by" class='level-5 value'>order_by</a>
+<a href="#value-Select.groupBy" class='level-5 value'>groupBy</a>
+<a href="#value-Select.orderBy" class='level-5 value'>orderBy</a>
 <a href="#value-Select.limit" class='level-5 value'>limit</a>
-<a href="#value-Select.to_sql" class='level-5 value'>to_sql</a>
+<a href="#value-Select.toSql" class='level-5 value'>toSql</a>
+<a href="#module-Update" class='level-2 module'>Update</a>
+<a href="#SqlComposer.Update" class='level-4 header'>SqlComposer.Update</a>
+<a href="#type-Update.t" class='level-5 type'>t</a>
+<a href="#value-Update.make" class='level-5 value'>make</a>
+<a href="#value-Update.modifier" class='level-5 value'>modifier</a>
+<a href="#value-Update.from" class='level-5 value'>from</a>
+<a href="#value-Update.join" class='level-5 value'>join</a>
+<a href="#value-Update.set" class='level-5 value'>set</a>
+<a href="#value-Update.where" class='level-5 value'>where</a>
+<a href="#value-Update.orderBy" class='level-5 value'>orderBy</a>
+<a href="#value-Update.limit" class='level-5 value'>limit</a>
+<a href="#value-Update.toSql" class='level-5 value'>toSql</a>
       </div>
-      <div class='project-title'>Package modules</div><div class='project-listing'><a href="SqlComposer.html">SqlComposer</a></div>
+      <div class='project-title'>Package modules</div><div class='project-listing'><a href="SqlComposer.html">SqlComposer</a>
+<a href="SqlComposer_component.html">SqlComposer_component</a>
+<a href="SqlComposer_select.html">SqlComposer_select</a>
+<a href="SqlComposer_update.html">SqlComposer_update</a></div>
     </div>
     </div>
   
@@ -53,13 +66,13 @@
 <p>Here is a basic example:</p>
 <div class='code-block' data-block-syntax="re">
   
-  <pre class='code' data-block-id='7' id='block-7'><code>let <span class='pattern-ident' data-type="string">sql</span> =
+  <pre class='code' data-block-id='6' id='block-6'><code>let <span class='pattern-ident' data-type="string">sql</span> =
   SqlComposer.Select.(
-    <span class='ident' data-type="SqlComposer.Select.t">select</span>
+    <span class='ident' data-type="unit => SqlComposer.Select.t">make</span><span class='constructor' data-type="unit">()</span>
     |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span>(<span class='string' data-type="string">&quot;*&quot;</span>)
     |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span>(<span class='string' data-type="string">&quot;test&quot;</span>)
     |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">where</span>(<span class='string' data-type="string">&quot;AND test.foo = ?&quot;</span>)
-    |. <span class='ident' data-type="SqlComposer.Select.t => string">to_sql</span>
+    |. <span class='ident' data-type="SqlComposer.Select.t => string">toSql</span>
   );
 <span class='ident' data-type="(string, string) => unit">Js.log2</span>(<span class='string' data-type="string">&quot;SQL: &quot;</span>, <span class='ident' data-type="string">sql</span>);</code></pre>
   
@@ -67,15 +80,15 @@
   
 </div><div class='code-block' data-block-syntax="ml">
   
-  <pre class='code' data-block-id='7-alt' id='block-7-alt'><code>[@@@ocaml.ppx.context { cookies = [] }]
+  <pre class='code' data-block-id='6-alt' id='block-6-alt'><code>[@@@ocaml.ppx.context { cookies = [] }]
 open SqlComposer
 let <span class='pattern-ident' data-type="string">sql</span> =
   let open SqlComposer.Select in
-    (((<span class='ident' data-type="SqlComposer.Select.t">select</span> |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span> ((&quot;*&quot;)[@reason.raw_literal &quot;*&quot;]))) |.
+    ((((<span class='ident' data-type="unit => SqlComposer.Select.t">make</span> <span class='constructor' data-type="unit">()</span>) |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span> ((&quot;*&quot;)[@reason.raw_literal &quot;*&quot;]))) |.
         (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span> ((&quot;test&quot;)[@reason.raw_literal &quot;test&quot;])))
        |.
        (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">where</span> ((&quot;AND test.foo = ?&quot;)[@reason.raw_literal &quot;AND test.foo = ?&quot;])))
-      |. <span class='ident' data-type="SqlComposer.Select.t => string">to_sql</span>
+      |. <span class='ident' data-type="SqlComposer.Select.t => string">toSql</span>
 let _ = <span class='ident' data-type="(string, string) => unit">Js.log2</span> ((&quot;SQL: &quot;)[@reason.raw_literal &quot;SQL: &quot;]) <span class='ident' data-type="string">sql</span></code></pre>
   
   
@@ -84,23 +97,18 @@ let _ = <span class='ident' data-type="(string, string) => unit">Js.log2</span> 
 
 <div class='body body-empty'></div></div>
 
-<div class='doc-item'><h4 class='item'>type <a href="#type-Select.flag" id="type-Select.flag">flag</a> = [ `MySqlCalcFoundRows
+<div class='doc-item'><h4 class='item'>let <a href="#value-Select.make" id="value-Select.make">make</a>: unit => <a href="#type-Select.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Select.modifier" id="value-Select.modifier">modifier</a>: (
+  <a href="#type-Select.t">t</a>,
+  [ `MySqlCalcFoundRows
 | `MySqlNoCache
 | `HighPriority
 | `Distinct
-| `StraightJoin ]</h4>
-
-<div class='body body-empty'></div></div>
-
-<div class='doc-item'><h4 class='item'>type <a href="#type-Select.ord" id="type-Select.ord">ord</a> = [ `Asc of string | `Desc of string ]</h4>
-
-<div class='body body-empty'></div></div>
-
-<div class='doc-item'><h4 class='item'>let <a href="#value-Select.select" id="value-Select.select">select</a>: <a href="#type-Select.t">t</a></h4>
-
-<div class='body body-empty'></div></div>
-
-<div class='doc-item'><h4 class='item'>let <a href="#value-Select.modifier" id="value-Select.modifier">modifier</a>: (<a href="#type-Select.t">t</a>, <a href="#type-Select.flag">flag</a>) => <a href="#type-Select.t">t</a></h4>
+| `StraightJoin ]
+) => <a href="#type-Select.t">t</a></h4>
 
 <div class='body body-empty'></div></div>
 
@@ -120,11 +128,11 @@ let _ = <span class='ident' data-type="(string, string) => unit">Js.log2</span> 
 
 <div class='body body-empty'></div></div>
 
-<div class='doc-item'><h4 class='item'>let <a href="#value-Select.group_by" id="value-Select.group_by">group_by</a>: (<a href="#type-Select.t">t</a>, string) => <a href="#type-Select.t">t</a></h4>
+<div class='doc-item'><h4 class='item'>let <a href="#value-Select.groupBy" id="value-Select.groupBy">groupBy</a>: (<a href="#type-Select.t">t</a>, string) => <a href="#type-Select.t">t</a></h4>
 
 <div class='body body-empty'></div></div>
 
-<div class='doc-item'><h4 class='item'>let <a href="#value-Select.order_by" id="value-Select.order_by">order_by</a>: (<a href="#type-Select.t">t</a>, <a href="#type-Select.ord">ord</a>) => <a href="#type-Select.t">t</a></h4>
+<div class='doc-item'><h4 class='item'>let <a href="#value-Select.orderBy" id="value-Select.orderBy">orderBy</a>: (<a href="#type-Select.t">t</a>, [ `Asc of string | `Desc of string ]) => <a href="#type-Select.t">t</a></h4>
 
 <div class='body body-empty'></div></div>
 
@@ -132,7 +140,100 @@ let _ = <span class='ident' data-type="(string, string) => unit">Js.log2</span> 
 
 <div class='body body-empty'></div></div>
 
-<div class='doc-item'><h4 class='item'>let <a href="#value-Select.to_sql" id="value-Select.to_sql">to_sql</a>: <a href="#type-Select.t">t</a> => string</h4>
+<div class='doc-item'><h4 class='item'>let <a href="#value-Select.toSql" id="value-Select.toSql">toSql</a>: <a href="#type-Select.t">t</a> => string</h4>
+
+<div class='body body-empty'></div></div></div></div>
+
+<div class='doc-item'><h4 class='item module'>module <a href="#module-Update" id="module-Update">Update</a></h4><div class='body module-body'><a href="#SqlComposer.Update" id="SqlComposer.Update"><h1>SqlComposer.Update</h1></a>
+
+<p>Generate composable SQL Update statements and fragments.</p>
+<p>Here is a basic example:</p>
+<div class='code-block' data-block-syntax="re">
+  
+  <pre class='code' data-block-id='7' id='block-7'><code>let <span class='pattern-ident' data-type="string">sql</span> =
+  SqlComposer.Update.(
+    <span class='ident' data-type="unit => SqlComposer.Update.t">make</span><span class='constructor' data-type="unit">()</span>
+    |. <span class='ident' data-type="(SqlComposer.Update.t, string) => SqlComposer.Update.t">from</span>(<span class='string' data-type="string">&quot;test&quot;</span>)
+    |. <span class='ident' data-type="(
+  SqlComposer.Update.t,
+  string,
+  string
+) => SqlComposer.Update.t">set</span>(<span class='string' data-type="string">&quot;foo&quot;</span>, <span class='string' data-type="string">&quot;?&quot;</span>)
+    |. <span class='ident' data-type="(
+  SqlComposer.Update.t,
+  string,
+  string
+) => SqlComposer.Update.t">set</span>(<span class='string' data-type="string">&quot;bar&quot;</span>, <span class='string' data-type="string">&quot;?&quot;</span>)
+    |. <span class='ident' data-type="(SqlComposer.Update.t, string) => SqlComposer.Update.t">where</span>(<span class='string' data-type="string">{|AND moo = &quot;cow&quot;|}</span>)
+    |. <span class='ident' data-type="SqlComposer.Update.t => string">toSql</span>
+  );
+<span class='ident' data-type="(string, string) => unit">Js.log2</span>(<span class='string' data-type="string">&quot;SQL: &quot;</span>, <span class='ident' data-type="string">sql</span>);</code></pre>
+  
+  
+  
+</div><div class='code-block' data-block-syntax="ml">
+  
+  <pre class='code' data-block-id='7-alt' id='block-7-alt'><code>[@@@ocaml.ppx.context { cookies = [] }]
+open SqlComposer
+let <span class='pattern-ident' data-type="string">sql</span> =
+  let open SqlComposer.Update in
+    (((((<span class='ident' data-type="unit => SqlComposer.Update.t">make</span> <span class='constructor' data-type="unit">()</span>) |. (<span class='ident' data-type="(SqlComposer.Update.t, string) => SqlComposer.Update.t">from</span> ((&quot;test&quot;)[@reason.raw_literal &quot;test&quot;]))) |.
+         (<span class='ident' data-type="(
+  SqlComposer.Update.t,
+  string,
+  string
+) => SqlComposer.Update.t">set</span> ((&quot;foo&quot;)[@reason.raw_literal &quot;foo&quot;])
+            ((&quot;?&quot;)[@reason.raw_literal &quot;?&quot;])))
+        |.
+        (<span class='ident' data-type="(
+  SqlComposer.Update.t,
+  string,
+  string
+) => SqlComposer.Update.t">set</span> ((&quot;bar&quot;)[@reason.raw_literal &quot;bar&quot;])
+           ((&quot;?&quot;)[@reason.raw_literal &quot;?&quot;])))
+       |. (<span class='ident' data-type="(SqlComposer.Update.t, string) => SqlComposer.Update.t">where</span> <span class='string' data-type="string">{|AND moo = &quot;cow&quot;|}</span>))
+      |. <span class='ident' data-type="SqlComposer.Update.t => string">toSql</span>
+let _ = <span class='ident' data-type="(string, string) => unit">Js.log2</span> ((&quot;SQL: &quot;)[@reason.raw_literal &quot;SQL: &quot;]) <span class='ident' data-type="string">sql</span></code></pre>
+  
+  
+  
+</div><p style='font-style:italic'>other items defined</p><div class='doc-item'><h4 class='item'>type <a href="#type-Update.t" id="type-Update.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Update.make" id="value-Update.make">make</a>: unit => <a href="#type-Update.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Update.modifier" id="value-Update.modifier">modifier</a>: (<a href="#type-Update.t">t</a>, [ `LowPriority | `Ignore ]) => <a href="#type-Update.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Update.from" id="value-Update.from">from</a>: (<a href="#type-Update.t">t</a>, string) => <a href="#type-Update.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Update.join" id="value-Update.join">join</a>: (<a href="#type-Update.t">t</a>, string) => <a href="#type-Update.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Update.set" id="value-Update.set">set</a>: (<a href="#type-Update.t">t</a>, string, string) => <a href="#type-Update.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Update.where" id="value-Update.where">where</a>: (<a href="#type-Update.t">t</a>, string) => <a href="#type-Update.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Update.orderBy" id="value-Update.orderBy">orderBy</a>: (<a href="#type-Update.t">t</a>, [ `Asc of string | `Desc of string ]) => <a href="#type-Update.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Update.limit" id="value-Update.limit">limit</a>: (<a href="#type-Update.t">t</a>, ~?offset: option(int), ~row_count: int) => <a href="#type-Update.t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-Update.toSql" id="value-Update.toSql">toSql</a>: <a href="#type-Update.t">t</a> => string</h4>
 
 <div class='body body-empty'></div></div></div></div>
     </div>

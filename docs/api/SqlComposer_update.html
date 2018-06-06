@@ -1,0 +1,105 @@
+
+    
+<!doctype html>
+<meta charset=utf8>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel=stylesheet href='../styles.css'>
+<script defer src='../script.js'></script>
+<title>SqlComposer_update</title>
+<body>
+<script>window.relativeToRoot=".."</script>
+<script defer src="../block-script.js"></script>
+<div id='error-message'>
+  ⚠️ Oops! This page doesn't appear to define a <span>type</span> called <code>_</code>.
+</div>
+
+    <script>window.shouldCheckHashes=true</script>
+    <div class='container'>
+    
+    <div class='sidebar-wrapper'>
+    <div class='sidebar-expander'>Show navigation</div>
+    <div class='sidebar'>
+      <a href="../search.html" style="display: block; padding: 0 8px;">Search</a>
+      
+      <div class='docs-listing'><a href="../index.html">Home</a></div>
+      <div class='toc-header'>Page Contents</div>
+      <div class='table-of-contents'>
+      <a href="#SqlComposer_update" class='level-1 header'>SqlComposer_update</a>
+<a href="#module-Modifier" class='level-2 module'>Modifier</a>
+<a href="#type-t" class='level-2 type'>t</a>
+<a href="#value-make" class='level-2 value'>make</a>
+<a href="#value-modifier" class='level-2 value'>modifier</a>
+<a href="#value-from" class='level-2 value'>from</a>
+<a href="#value-join" class='level-2 value'>join</a>
+<a href="#value-set" class='level-2 value'>set</a>
+<a href="#value-where" class='level-2 value'>where</a>
+<a href="#value-orderBy" class='level-2 value'>orderBy</a>
+<a href="#value-limit" class='level-2 value'>limit</a>
+<a href="#value-toSql" class='level-2 value'>toSql</a>
+      </div>
+      <div class='project-title'>Package modules</div><div class='project-listing'><a href="SqlComposer.html">SqlComposer</a>
+<a href="SqlComposer_component.html">SqlComposer_component</a>
+<a href="SqlComposer_select.html">SqlComposer_select</a>
+<a href="SqlComposer_update.html">SqlComposer_update</a></div>
+    </div>
+    </div>
+  
+    <div class='main'>
+    
+    <a href="#SqlComposer_update" id="SqlComposer_update"><h1>SqlComposer_update</h1></a>
+
+<p><span class='missing'>This module does not have a toplevel documentation block.</span></p>
+<div class='doc-item'><h4 class='item module'>module <a href="#module-Modifier" id="module-Modifier">Modifier</a> : <a href="SqlComposer_component.html#module-Modifier" title="SqlComposer_component.Modifier">Modifier</a></h4></div>
+
+<div class='doc-item'><h4 class='item'>type <a href="#type-t" id="type-t">t</a> = {
+  modifier: option(<a href="#module-Modifier">Modifier</a>.<a href="#type-Modifier.t">t</a>),
+  from: option(<a href="SqlComposer_component.html#module-Table" title="SqlComposer_component.Table">Table</a>.<a href="SqlComposer_component.html#type-Table.t">t</a>),
+  join: option(<a href="SqlComposer_component.html#module-Join" title="SqlComposer_component.Join">Join</a>.<a href="SqlComposer_component.html#type-Join.t">t</a>),
+  set: option(<a href="SqlComposer_component.html#module-Assignment" title="SqlComposer_component.Assignment">Assignment</a>.<a href="SqlComposer_component.html#type-Assignment.t">t</a>),
+  where: option(<a href="SqlComposer_component.html#module-Where" title="SqlComposer_component.Where">Where</a>.<a href="SqlComposer_component.html#type-Where.t">t</a>),
+  orderBy: option(<a href="SqlComposer_component.html#module-OrderBy" title="SqlComposer_component.OrderBy">OrderBy</a>.<a href="SqlComposer_component.html#type-OrderBy.t">t</a>),
+  limit: option(<a href="SqlComposer_component.html#module-Limit" title="SqlComposer_component.Limit">Limit</a>.<a href="SqlComposer_component.html#type-Limit.t">t</a>)
+}</h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-make" id="value-make">make</a>: unit => <a href="#type-t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-modifier" id="value-modifier">modifier</a>: (<a href="#type-t">t</a>, [ `Ignore | `LowPriority ]) => <a href="#type-t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-from" id="value-from">from</a>: (<a href="#type-t">t</a>, string) => <a href="#type-t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-join" id="value-join">join</a>: (<a href="#type-t">t</a>, string) => <a href="#type-t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-set" id="value-set">set</a>: (<a href="#type-t">t</a>, string, string) => <a href="#type-t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-where" id="value-where">where</a>: (<a href="#type-t">t</a>, string) => <a href="#type-t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-orderBy" id="value-orderBy">orderBy</a>: (<a href="#type-t">t</a>, [ `Asc of string | `Desc of string ]) => <a href="#type-t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-limit" id="value-limit">limit</a>: (<a href="#type-t">t</a>, ~?offset: option(int), ~row_count: int) => <a href="#type-t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-toSql" id="value-toSql">toSql</a>: <a href="#type-t">t</a> => string</h4>
+
+<div class='body body-empty'></div></div>
+
+    </div>
+    <div class='right-blank'></div>
+    </div>
+  

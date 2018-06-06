@@ -36,7 +36,10 @@
 <a href="#select-distinct" class='level-3 header'>Select Distinct</a>
 <a href="#how-do-i-install-it-" class='level-2 header'>How do I install it?</a>
       </div>
-      <div class='project-title'>Package modules</div><div class='project-listing'><a href="./api/SqlComposer.html">SqlComposer</a></div>
+      <div class='project-title'>Package modules</div><div class='project-listing'><a href="./api/SqlComposer.html">SqlComposer</a>
+<a href="./api/SqlComposer_component.html">SqlComposer_component</a>
+<a href="./api/SqlComposer_select.html">SqlComposer_select</a>
+<a href="./api/SqlComposer_update.html">SqlComposer_update</a></div>
     </div>
     </div>
   
@@ -49,41 +52,11 @@
 
 <a href="#basic-select" id="basic-select"><h3>Basic Select</h3></a><div class='code-block' data-block-syntax="re">
   
-  <pre class='code' data-block-id='6' id='block-6'><code>  SqlComposer.Select.(
-    <span class='ident' data-type="SqlComposer.Select.t">select</span>
-    |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span>(<span class='string' data-type="string">&quot;*&quot;</span>)
-    |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span>(<span class='string' data-type="string">&quot;test&quot;</span>)
-    |. <span class='ident' data-type="SqlComposer.Select.t => string">to_sql</span>
-    |. <span class='ident' data-type="string => unit">Js.log</span>
-  );</code></pre>
-  
-  
-  
-</div><div class='code-block' data-block-syntax="ml">
-  
-  <pre class='code' data-block-id='6-alt' id='block-6-alt'><code>[@@@ocaml.ppx.context { cookies = [] }]
-let _ =
-  let open SqlComposer.Select in
-    (((<span class='ident' data-type="SqlComposer.Select.t">select</span> |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span> ((&quot;*&quot;)[@reason.raw_literal &quot;*&quot;]))) |.
-        (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span> ((&quot;test&quot;)[@reason.raw_literal &quot;test&quot;])))
-       |. <span class='ident' data-type="SqlComposer.Select.t => string">to_sql</span>)
-      |. <span class='ident' data-type="string => unit">Js.log</span></code></pre>
-  
-  
-  
-</div><pre class='code-txt sql'><code class='sql'>SELECT
-  *
-FROM test
-WHERE 1=1</code></pre>
-
-<a href="#where-clause" id="where-clause"><h3>Where Clause</h3></a><div class='code-block' data-block-syntax="re">
-  
   <pre class='code' data-block-id='5' id='block-5'><code>  SqlComposer.Select.(
-    <span class='ident' data-type="SqlComposer.Select.t">select</span>
+    <span class='ident' data-type="unit => SqlComposer.Select.t">make</span><span class='constructor' data-type="unit">()</span>
     |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span>(<span class='string' data-type="string">&quot;*&quot;</span>)
     |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span>(<span class='string' data-type="string">&quot;test&quot;</span>)
-    |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">where</span>(<span class='string' data-type="string">&quot;AND test.foo = ?&quot;</span>)
-    |. <span class='ident' data-type="SqlComposer.Select.t => string">to_sql</span>
+    |. <span class='ident' data-type="SqlComposer.Select.t => string">toSql</span>
     |. <span class='ident' data-type="string => unit">Js.log</span>
   );</code></pre>
   
@@ -94,11 +67,9 @@ WHERE 1=1</code></pre>
   <pre class='code' data-block-id='5-alt' id='block-5-alt'><code>[@@@ocaml.ppx.context { cookies = [] }]
 let _ =
   let open SqlComposer.Select in
-    ((((<span class='ident' data-type="SqlComposer.Select.t">select</span> |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span> ((&quot;*&quot;)[@reason.raw_literal &quot;*&quot;]))) |.
-         (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span> ((&quot;test&quot;)[@reason.raw_literal &quot;test&quot;])))
-        |.
-        (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">where</span> ((&quot;AND test.foo = ?&quot;)[@reason.raw_literal &quot;AND test.foo = ?&quot;])))
-       |. <span class='ident' data-type="SqlComposer.Select.t => string">to_sql</span>)
+    ((((<span class='ident' data-type="unit => SqlComposer.Select.t">make</span> <span class='constructor' data-type="unit">()</span>) |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span> ((&quot;*&quot;)[@reason.raw_literal &quot;*&quot;]))) |.
+        (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span> ((&quot;test&quot;)[@reason.raw_literal &quot;test&quot;])))
+       |. <span class='ident' data-type="SqlComposer.Select.t => string">toSql</span>)
       |. <span class='ident' data-type="string => unit">Js.log</span></code></pre>
   
   
@@ -106,15 +77,31 @@ let _ =
 </div><pre class='code-txt sql'><code class='sql'>SELECT
   *
 FROM test
+WHERE 1=1</code></pre>
+
+<a href="#where-clause" id="where-clause"><h3>Where Clause</h3></a><p>There is an implicit <code>WHERE 1=1</code> added to every query.  This is done to
+eliminate confusion with compound queries regarding the concatenation of
+where clauses.<br/><code>reason
+  SqlComposer.Select.(
+    make()
+    |. field(&quot;*&quot;)
+    |. from(&quot;test&quot;)
+    |. where(&quot;AND test.foo = ?&quot;)
+    |. toSql
+    |. Js.log
+  );</code></p>
+<pre class='code-txt sql'><code class='sql'>SELECT
+  *
+FROM test
 WHERE 1=1
 AND test.foo = ?</code></pre>
 
 <a href="#join-clause" id="join-clause"><h3>Join Clause</h3></a><pre class='code-txt reasons'><code class='reasons'>  SqlComposer.Select.(
-    select
+    make()
     |. field(&quot;*&quot;)
     |. from(&quot;test&quot;)
     |. join(&quot;JOIN foo ON test.foo_id = foo.id&quot;)
-    |. to_sql
+    |. toSql
     |. Js.log
   )</code></pre><pre class='code-txt sql'><code class='sql'>SELECT
   *
@@ -125,7 +112,7 @@ WHERE 1=1</code></pre>
 <a href="#adding-to-a-base-query" id="adding-to-a-base-query"><h3>Adding to a base query</h3></a><div class='code-block' data-block-syntax="re">
   
   <pre class='code' data-block-id='4' id='block-4'><code>  let <span class='pattern-ident' data-type="SqlComposer.Select.t">base_query</span> = SqlComposer.Select.(
-    <span class='ident' data-type="SqlComposer.Select.t">select</span>
+    <span class='ident' data-type="unit => SqlComposer.Select.t">make</span><span class='constructor' data-type="unit">()</span>
     |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span>(<span class='string' data-type="string">&quot;test&quot;</span>)
     |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span>(<span class='string' data-type="string">&quot;foo&quot;</span>)
     |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span>(<span class='string' data-type="string">&quot;bar&quot;</span>)
@@ -134,7 +121,7 @@ WHERE 1=1</code></pre>
   SqlComposer.Select.(
     <span class='ident' data-type="SqlComposer.Select.t">base_query</span>
     |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">where</span>(<span class='string' data-type="string">&quot;AND test.foo = ?&quot;</span>)
-    |. <span class='ident' data-type="SqlComposer.Select.t => string">to_sql</span>
+    |. <span class='ident' data-type="SqlComposer.Select.t => string">toSql</span>
     |. <span class='ident' data-type="string => unit">Js.log</span>
   );</code></pre>
   
@@ -145,14 +132,14 @@ WHERE 1=1</code></pre>
   <pre class='code' data-block-id='4-alt' id='block-4-alt'><code>[@@@ocaml.ppx.context { cookies = [] }]
 let <span class='pattern-ident' data-type="SqlComposer.Select.t">base_query</span> =
   let open SqlComposer.Select in
-    ((<span class='ident' data-type="SqlComposer.Select.t">select</span> |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span> ((&quot;test&quot;)[@reason.raw_literal &quot;test&quot;]))) |.
+    (((<span class='ident' data-type="unit => SqlComposer.Select.t">make</span> <span class='constructor' data-type="unit">()</span>) |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span> ((&quot;test&quot;)[@reason.raw_literal &quot;test&quot;]))) |.
        (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span> ((&quot;foo&quot;)[@reason.raw_literal &quot;foo&quot;])))
       |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span> ((&quot;bar&quot;)[@reason.raw_literal &quot;bar&quot;]))
 let _ =
   let open SqlComposer.Select in
     ((<span class='ident' data-type="SqlComposer.Select.t">base_query</span> |.
         (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">where</span> ((&quot;AND test.foo = ?&quot;)[@reason.raw_literal &quot;AND test.foo = ?&quot;])))
-       |. <span class='ident' data-type="SqlComposer.Select.t => string">to_sql</span>)
+       |. <span class='ident' data-type="SqlComposer.Select.t => string">toSql</span>)
       |. <span class='ident' data-type="string => unit">Js.log</span></code></pre>
   
   
@@ -167,10 +154,10 @@ AND test.foo = ?</code></pre>
 <a href="#alias-a-field" id="alias-a-field"><h3>Alias a field</h3></a><div class='code-block' data-block-syntax="re">
   
   <pre class='code' data-block-id='3' id='block-3'><code>SqlComposer.Select.(
-  <span class='ident' data-type="SqlComposer.Select.t">select</span>
+  <span class='ident' data-type="unit => SqlComposer.Select.t">make</span><span class='constructor' data-type="unit">()</span>
   |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span>(<span class='string' data-type="string">&quot;test&quot;</span>)
   |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span>(<span class='string' data-type="string">&quot;foo AS bar&quot;</span>)
-  |. <span class='ident' data-type="SqlComposer.Select.t => string">to_sql</span>
+  |. <span class='ident' data-type="SqlComposer.Select.t => string">toSql</span>
   |. <span class='ident' data-type="string => unit">Js.log</span>
 );</code></pre>
   
@@ -181,9 +168,9 @@ AND test.foo = ?</code></pre>
   <pre class='code' data-block-id='3-alt' id='block-3-alt'><code>[@@@ocaml.ppx.context { cookies = [] }]
 let _ =
   let open SqlComposer.Select in
-    (((<span class='ident' data-type="SqlComposer.Select.t">select</span> |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span> ((&quot;test&quot;)[@reason.raw_literal &quot;test&quot;]))) |.
+    ((((<span class='ident' data-type="unit => SqlComposer.Select.t">make</span> <span class='constructor' data-type="unit">()</span>) |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span> ((&quot;test&quot;)[@reason.raw_literal &quot;test&quot;]))) |.
         (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span> ((&quot;foo AS bar&quot;)[@reason.raw_literal &quot;foo AS bar&quot;])))
-       |. <span class='ident' data-type="SqlComposer.Select.t => string">to_sql</span>)
+       |. <span class='ident' data-type="SqlComposer.Select.t => string">toSql</span>)
       |. <span class='ident' data-type="string => unit">Js.log</span></code></pre>
   
   
@@ -196,18 +183,18 @@ WHERE 1=1</code></pre>
 <a href="#order-by" id="order-by"><h3>Order By</h3></a><div class='code-block' data-block-syntax="ml">
   
   <pre class='code' data-block-id='2' id='block-2'><code>SqlComposer.Select.(
-  <span class='ident' data-type="SqlComposer.Select.t">select</span>
+  <span class='ident' data-type="unit => SqlComposer.Select.t">make</span><span class='constructor' data-type="unit">()</span>
   |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span>(&quot;test&quot;)
   |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span>(&quot;*&quot;)
   |. <span class='ident' data-type="(
   SqlComposer.Select.t,
-  SqlComposer.Select.ord
-) => SqlComposer.Select.t">order_by</span>(`Asc(&quot;foo&quot;))
+  [ `Asc of string | `Desc of string ]
+) => SqlComposer.Select.t">orderBy</span>(`Asc(&quot;foo&quot;))
   |. <span class='ident' data-type="(
   SqlComposer.Select.t,
-  SqlComposer.Select.ord
-) => SqlComposer.Select.t">order_by</span>(`Desc(&quot;bar&quot;))
-  |. <span class='ident' data-type="SqlComposer.Select.t => string">to_sql</span>
+  [ `Asc of string | `Desc of string ]
+) => SqlComposer.Select.t">orderBy</span>(`Desc(&quot;bar&quot;))
+  |. <span class='ident' data-type="SqlComposer.Select.t => string">toSql</span>
   |. <span class='ident' data-type="string => unit">Js.log</span>
 );</code></pre>
   
@@ -216,18 +203,18 @@ WHERE 1=1</code></pre>
 </div><div class='code-block' data-block-syntax="re">
   
   <pre class='code' data-block-id='2-alt' id='block-2-alt'><code>SqlComposer.Select.(
-  <span class='ident' data-type="SqlComposer.Select.t">select</span>
+  <span class='ident' data-type="unit => SqlComposer.Select.t">make</span><span class='constructor' data-type="unit">()</span>
   |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span>(<span class='string' data-type="string">&quot;test&quot;</span>)
   |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span>(<span class='string' data-type="string">&quot;*&quot;</span>)
   |. <span class='ident' data-type="(
   SqlComposer.Select.t,
-  SqlComposer.Select.ord
-) => SqlComposer.Select.t">order_by</span>(`Asc(&quot;foo&quot;))
+  [ `Asc of string | `Desc of string ]
+) => SqlComposer.Select.t">orderBy</span>(`Asc(&quot;foo&quot;))
   |. <span class='ident' data-type="(
   SqlComposer.Select.t,
-  SqlComposer.Select.ord
-) => SqlComposer.Select.t">order_by</span>(`Desc(&quot;bar&quot;))
-  |. <span class='ident' data-type="SqlComposer.Select.t => string">to_sql</span>
+  [ `Asc of string | `Desc of string ]
+) => SqlComposer.Select.t">orderBy</span>(`Desc(&quot;bar&quot;))
+  |. <span class='ident' data-type="SqlComposer.Select.t => string">toSql</span>
   |. <span class='ident' data-type="string => unit">Js.log</span>
 );</code></pre>
   
@@ -244,11 +231,11 @@ ORDER BY
 <a href="#group-by" id="group-by"><h3>Group By</h3></a><div class='code-block' data-block-syntax="re">
   
   <pre class='code' data-block-id='1' id='block-1'><code>SqlComposer.Select.(
-  <span class='ident' data-type="SqlComposer.Select.t">select</span>
+  <span class='ident' data-type="unit => SqlComposer.Select.t">make</span><span class='constructor' data-type="unit">()</span>
   |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span>(<span class='string' data-type="string">&quot;test&quot;</span>)
   |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span>(<span class='string' data-type="string">&quot;foo AS bar&quot;</span>)
-  |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">group_by</span>(<span class='string' data-type="string">&quot;foo&quot;</span>)
-  |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">group_by</span>(<span class='string' data-type="string">&quot;thing&quot;</span>)
+  |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">groupBy</span>(<span class='string' data-type="string">&quot;foo&quot;</span>)
+  |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">groupBy</span>(<span class='string' data-type="string">&quot;thing&quot;</span>)
 );</code></pre>
   
   
@@ -258,10 +245,10 @@ ORDER BY
   <pre class='code' data-block-id='1-alt' id='block-1-alt'><code>[@@@ocaml.ppx.context { cookies = [] }]
 let _ =
   let open SqlComposer.Select in
-    (((<span class='ident' data-type="SqlComposer.Select.t">select</span> |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span> ((&quot;test&quot;)[@reason.raw_literal &quot;test&quot;]))) |.
+    ((((<span class='ident' data-type="unit => SqlComposer.Select.t">make</span> <span class='constructor' data-type="unit">()</span>) |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span> ((&quot;test&quot;)[@reason.raw_literal &quot;test&quot;]))) |.
         (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span> ((&quot;foo AS bar&quot;)[@reason.raw_literal &quot;foo AS bar&quot;])))
-       |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">group_by</span> ((&quot;foo&quot;)[@reason.raw_literal &quot;foo&quot;])))
-      |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">group_by</span> ((&quot;thing&quot;)[@reason.raw_literal &quot;thing&quot;]))</code></pre>
+       |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">groupBy</span> ((&quot;foo&quot;)[@reason.raw_literal &quot;foo&quot;])))
+      |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">groupBy</span> ((&quot;thing&quot;)[@reason.raw_literal &quot;thing&quot;]))</code></pre>
   
   
   
@@ -276,12 +263,16 @@ GROUP BY
 <a href="#select-distinct" id="select-distinct"><h3>Select Distinct</h3></a><div class='code-block' data-block-syntax="re">
   
   <pre class='code' data-block-id='0' id='block-0'><code>SqlComposer.Select.(
-  <span class='ident' data-type="SqlComposer.Select.t">select</span>
+  <span class='ident' data-type="unit => SqlComposer.Select.t">make</span><span class='constructor' data-type="unit">()</span>
   |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span>(<span class='string' data-type="string">&quot;foo&quot;</span>)
   |. <span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span>(<span class='string' data-type="string">&quot;test&quot;</span>)
   |. <span class='ident' data-type="(
   SqlComposer.Select.t,
-  SqlComposer.Select.flag
+  [ `MySqlCalcFoundRows
+| `MySqlNoCache
+| `HighPriority
+| `Distinct
+| `StraightJoin ]
 ) => SqlComposer.Select.t">modifier</span>(`Distinct)
 );</code></pre>
   
@@ -292,11 +283,15 @@ GROUP BY
   <pre class='code' data-block-id='0-alt' id='block-0-alt'><code>[@@@ocaml.ppx.context { cookies = [] }]
 let _ =
   let open SqlComposer.Select in
-    ((<span class='ident' data-type="SqlComposer.Select.t">select</span> |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span> ((&quot;foo&quot;)[@reason.raw_literal &quot;foo&quot;]))) |.
+    (((<span class='ident' data-type="unit => SqlComposer.Select.t">make</span> <span class='constructor' data-type="unit">()</span>) |. (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">field</span> ((&quot;foo&quot;)[@reason.raw_literal &quot;foo&quot;]))) |.
        (<span class='ident' data-type="(SqlComposer.Select.t, string) => SqlComposer.Select.t">from</span> ((&quot;test&quot;)[@reason.raw_literal &quot;test&quot;])))
       |. (<span class='ident' data-type="(
   SqlComposer.Select.t,
-  SqlComposer.Select.flag
+  [ `MySqlCalcFoundRows
+| `MySqlNoCache
+| `HighPriority
+| `Distinct
+| `StraightJoin ]
 ) => SqlComposer.Select.t">modifier</span> `Distinct)</code></pre>
   
   

@@ -9,10 +9,10 @@ A library for SQL composition in BucklesScript
 ### Basic Select
 ```reason
   SqlComposer.Select.(
-    main()
+    make()
     |. field("*")
     |. from("test")
-    |. to_sql
+    |. toSql
     |. Js.log
   );
 ```
@@ -29,11 +29,11 @@ eliminate confusion with compound queries regarding the concatenation of
 where clauses.  
 ```reason
   SqlComposer.Select.(
-    main()
+    make()
     |. field("*")
     |. from("test")
     |. where("AND test.foo = ?")
-    |. to_sql
+    |. toSql
     |. Js.log
   );
 ```
@@ -48,11 +48,11 @@ AND test.foo = ?
 ### Join Clause
 ```reasons
   SqlComposer.Select.(
-    main()
+    make()
     |. field("*")
     |. from("test")
     |. join("JOIN foo ON test.foo_id = foo.id")
-    |. to_sql
+    |. toSql
     |. Js.log
   )
 ```
@@ -67,7 +67,7 @@ WHERE 1=1
 ### Adding to a base query
 ```reason
   let base_query = SqlComposer.Select.(
-    main()
+    make()
     |. from("test")
     |. field("foo")
     |. field("bar")
@@ -76,7 +76,7 @@ WHERE 1=1
   SqlComposer.Select.(
     base_query
     |. where("AND test.foo = ?")
-    |. to_sql
+    |. toSql
     |. Js.log
   );
 ```
@@ -92,10 +92,10 @@ AND test.foo = ?
 ### Alias a field
 ```reason
 SqlComposer.Select.(
-  main()
+  make()
   |. from("test")
   |. field("foo AS bar")
-  |. to_sql
+  |. toSql
   |. Js.log
 );
 ```
@@ -109,12 +109,12 @@ WHERE 1=1
 ### Order By
 ```ocaml
 SqlComposer.Select.(
-  main()
+  make()
   |. from("test")
   |. field("*")
-  |. order_by(`Asc("foo"))
-  |. order_by(`Desc("bar"))
-  |. to_sql
+  |. orderBy(`Asc("foo"))
+  |. orderBy(`Desc("bar"))
+  |. toSql
   |. Js.log
 );
 ```
@@ -131,11 +131,11 @@ ORDER BY
 ### Group By
 ```reason
 SqlComposer.Select.(
-  main()
+  make()
   |. from("test")
   |. field("foo AS bar")
-  |. group_by("foo")
-  |. group_by("thing")
+  |. groupBy("foo")
+  |. groupBy("thing")
 );
 ```
 ```sql
@@ -151,7 +151,7 @@ GROUP BY
 ### Select Distinct
 ```reason
 SqlComposer.Select.(
-  main()
+  make()
   |. field("foo")
   |. from("test")
   |. modifier(`Distinct)
