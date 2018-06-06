@@ -25,9 +25,11 @@
       <div class='toc-header'>Page Contents</div>
       <div class='table-of-contents'>
       <a href="#SqlComposer_update" class='level-1 header'>SqlComposer_update</a>
+<a href="#module-Select" class='level-2 module'>Select</a>
 <a href="#module-Modifier" class='level-2 module'>Modifier</a>
 <a href="#type-t" class='level-2 type'>t</a>
 <a href="#value-make" class='level-2 value'>make</a>
+<a href="#value-assemble" class='level-2 value'>assemble</a>
 <a href="#value-modifier" class='level-2 value'>modifier</a>
 <a href="#value-from" class='level-2 value'>from</a>
 <a href="#value-join" class='level-2 value'>join</a>
@@ -39,6 +41,7 @@
       </div>
       <div class='project-title'>Package modules</div><div class='project-listing'><a href="SqlComposer.html">SqlComposer</a>
 <a href="SqlComposer_component.html">SqlComposer_component</a>
+<a href="SqlComposer_conversion.html">SqlComposer_conversion</a>
 <a href="SqlComposer_select.html">SqlComposer_select</a>
 <a href="SqlComposer_update.html">SqlComposer_update</a></div>
     </div>
@@ -49,6 +52,8 @@
     <a href="#SqlComposer_update" id="SqlComposer_update"><h1>SqlComposer_update</h1></a>
 
 <p><span class='missing'>This module does not have a toplevel documentation block.</span></p>
+<div class='doc-item'><h4 class='item module'>module <a href="#module-Select" id="module-Select">Select</a> : <a href="SqlComposer_select.html">SqlComposer_select</a></h4></div>
+
 <div class='doc-item'><h4 class='item module'>module <a href="#module-Modifier" id="module-Modifier">Modifier</a> : <a href="SqlComposer_component.html#module-Modifier" title="SqlComposer_component.Modifier">Modifier</a></h4></div>
 
 <div class='doc-item'><h4 class='item'>type <a href="#type-t" id="type-t">t</a> = {
@@ -64,6 +69,19 @@
 <div class='body body-empty'></div></div>
 
 <div class='doc-item'><h4 class='item'>let <a href="#value-make" id="value-make">make</a>: unit => <a href="#type-t">t</a></h4>
+
+<div class='body body-empty'></div></div>
+
+<div class='doc-item'><h4 class='item'>let <a href="#value-assemble" id="value-assemble">assemble</a>: (
+  ~?modifier: option(<a href="#module-Modifier">Modifier</a>.<a href="#type-Modifier.t">t</a>),
+  ~?from: option(<a href="SqlComposer_component.html#module-Table" title="SqlComposer_component.Table">Table</a>.<a href="SqlComposer_component.html#type-Table.t">t</a>),
+  ~?join: option(<a href="SqlComposer_component.html#module-Join" title="SqlComposer_component.Join">Join</a>.<a href="SqlComposer_component.html#type-Join.t">t</a>),
+  ~?set: option(<a href="SqlComposer_component.html#module-Assignment" title="SqlComposer_component.Assignment">Assignment</a>.<a href="SqlComposer_component.html#type-Assignment.t">t</a>),
+  ~?where: option(<a href="SqlComposer_component.html#module-Where" title="SqlComposer_component.Where">Where</a>.<a href="SqlComposer_component.html#type-Where.t">t</a>),
+  ~?orderBy: option(<a href="SqlComposer_component.html#module-OrderBy" title="SqlComposer_component.OrderBy">OrderBy</a>.<a href="SqlComposer_component.html#type-OrderBy.t">t</a>),
+  ~?limit: option(<a href="SqlComposer_component.html#module-Limit" title="SqlComposer_component.Limit">Limit</a>.<a href="SqlComposer_component.html#type-Limit.t">t</a>),
+  'a
+) => <a href="#type-t">t</a></h4>
 
 <div class='body body-empty'></div></div>
 
