@@ -9,8 +9,8 @@ stages:
 test:
   stage: test
   script:
-  - npm install
-  - npm test:no-report
+  - yarn install
+  - yarn test:no-report
   
 pages:
   script:
