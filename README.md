@@ -9,7 +9,7 @@ A library for SQL composition in BucklesScript
 ### Basic Select
 ```reason
   SqlComposer.Select.(
-    select
+    main()
     |. field("*")
     |. from("test")
     |. to_sql
@@ -29,7 +29,7 @@ eliminate confusion with compound queries regarding the concatenation of
 where clauses.  
 ```reason
   SqlComposer.Select.(
-    select
+    main()
     |. field("*")
     |. from("test")
     |. where("AND test.foo = ?")
@@ -48,7 +48,7 @@ AND test.foo = ?
 ### Join Clause
 ```reasons
   SqlComposer.Select.(
-    select
+    main()
     |. field("*")
     |. from("test")
     |. join("JOIN foo ON test.foo_id = foo.id")
@@ -67,7 +67,7 @@ WHERE 1=1
 ### Adding to a base query
 ```reason
   let base_query = SqlComposer.Select.(
-    select
+    main()
     |. from("test")
     |. field("foo")
     |. field("bar")
@@ -92,7 +92,7 @@ AND test.foo = ?
 ### Alias a field
 ```reason
 SqlComposer.Select.(
-  select
+  main()
   |. from("test")
   |. field("foo AS bar")
   |. to_sql
@@ -109,7 +109,7 @@ WHERE 1=1
 ### Order By
 ```ocaml
 SqlComposer.Select.(
-  select
+  main()
   |. from("test")
   |. field("*")
   |. order_by(`Asc("foo"))
@@ -131,7 +131,7 @@ ORDER BY
 ### Group By
 ```reason
 SqlComposer.Select.(
-  select
+  main()
   |. from("test")
   |. field("foo AS bar")
   |. group_by("foo")
@@ -151,7 +151,7 @@ GROUP BY
 ### Select Distinct
 ```reason
 SqlComposer.Select.(
-  select
+  main()
   |. field("foo")
   |. from("test")
   |. modifier(`Distinct)

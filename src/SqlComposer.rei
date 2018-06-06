@@ -13,7 +13,7 @@ module Select: {
    * ```reason
    * let sql =
    *   SqlComposer.Select.(
-   *     select
+   *     make()
    *     |. field("*")
    *     |. from("test")
    *     |. where("AND test.foo = ?")
