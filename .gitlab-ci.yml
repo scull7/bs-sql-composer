@@ -2,6 +2,7 @@ image: node
 pages:
   script:
   - git clone https://github.com/jaredly/redoc.git /opt/redoc
+  - npm install --global bs-platform
   - npm install --prefix /opt/redoc
   - /opt/redoc/redoc.sh
   artifacts:
