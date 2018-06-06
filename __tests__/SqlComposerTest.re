@@ -30,149 +30,149 @@ let genFileTest = (name, file, sqlGenerator) =>
 
 describe("Select Interface", () => {
   genFileTest("A basic query", "select-basic", () =>
-    SqlComposer.Select.(select |. from("test") |. field("*") |. to_sql)
+    SqlComposer.Select.(make() |. from("test") |. field("*") |. toSql)
   );
 
   genFileTest("A query with a join", "select-join", () =>
     SqlComposer.Select.(
-      select |. from("test") |. field("*") |. join("JOIN foo") |. to_sql
+      make() |. from("test") |. field("*") |. join("JOIN foo") |. toSql
     )
   );
 
   genFileTest("A query with a where clause", "select-where", () =>
     SqlComposer.Select.(
-      select
+      make()
       |. from("test")
       |. field("*")
       |. where("AND test.foo = ?")
-      |. to_sql
+      |. toSql
     )
   );
 
   genFileTest("Adding to a base query", "composition-basic", () => {
     let baseQuery =
       SqlComposer.Select.(
-        select |. from("test") |. field("foo") |. field("bar")
+        make() |. from("test") |. field("foo") |. field("bar")
       );
 
-    SqlComposer.Select.(baseQuery |. where("AND test.foo = ?") |. to_sql);
+    SqlComposer.Select.(baseQuery |. where("AND test.foo = ?") |. toSql);
   });
 
   genFileTest("Field alias", "select-field-alias", () =>
     SqlComposer.Select.(
-      select |. from("test") |. field("foo AS bar") |. to_sql
+      make() |. from("test") |. field("foo AS bar") |. toSql
     )
   );
 
   genFileTest("Limit", "select-limit", () =>
     SqlComposer.Select.(
-      select
+      make()
       |. from("test")
       |. field("foo AS bar")
       |. limit(~row_count=10, ~offset=?None)
-      |. to_sql
+      |. toSql
     )
   );
 
   genFileTest("Limit with offset", "select-limit-offset", () =>
     SqlComposer.Select.(
-      select
+      make()
       |. from("test")
       |. field("foo AS bar")
       |. limit(~row_count=10, ~offset=2)
-      |. to_sql
+      |. toSql
     )
   );
 
   genFileTest("Order BY ASC", "order-by-asc", () =>
     SqlComposer.Select.(
-      select
+      make()
       |. from("test")
-      |. order_by(`Asc("foo"))
+      |. orderBy(`Asc("foo"))
       |. field("foo AS bar")
       |. limit(~row_count=10, ~offset=2)
-      |. to_sql
+      |. toSql
     )
   );
   genFileTest("Order BY DESC", "order-by-desc", () =>
     SqlComposer.Select.(
-      select
+      make()
       |. from("test")
-      |. order_by(`Desc("foo"))
+      |. orderBy(`Desc("foo"))
       |. field("foo AS bar")
       |. limit(~row_count=10, ~offset=2)
-      |. to_sql
+      |. toSql
     )
   );
   genFileTest("Order By 2 fields", "order-by-2-fields", () =>
     SqlComposer.Select.(
-      select
+      make()
       |. from("test")
-      |. order_by(`Asc("foo"))
-      |. order_by(`Desc("bar"))
+      |. orderBy(`Asc("foo"))
+      |. orderBy(`Desc("bar"))
       |. field("foo AS bar")
       |. limit(~row_count=10, ~offset=2)
-      |. to_sql
+      |. toSql
     )
   );
 
   genFileTest("Group By", "group-by", () =>
     SqlComposer.Select.(
-      select
+      make()
       |. from("test")
-      |. group_by("foo")
+      |. groupBy("foo")
       |. field("foo")
       |. modifier(`Distinct)
-      |. to_sql
+      |. toSql
     )
   );
 
   genFileTest("Group By multiple", "group-by-multiple", () =>
     SqlComposer.Select.(
-      select
+      make()
       |. from("test")
-      |. group_by("foo")
+      |. groupBy("foo")
       |. field("foo")
       |. modifier(`Distinct)
-      |. group_by("bar")
-      |. to_sql
+      |. groupBy("bar")
+      |. toSql
     )
   );
 
   genFileTest("Adding a DISTINCT modifier", "modifier-distinct", () =>
     SqlComposer.Select.(
-      select |. from("test") |. modifier(`Distinct) |. field("*") |. to_sql
+      make() |. from("test") |. modifier(`Distinct) |. field("*") |. toSql
     )
   );
 
   genFileTest("Adding a STRAIGHT_JOIN modifier", "modifier-straight-join", () =>
     SqlComposer.Select.(
-      select
+      make()
       |. modifier(`StraightJoin)
       |. from("test")
       |. field("*")
-      |. to_sql
+      |. toSql
     )
   );
 
   genFileTest("Adding a SQL_NO_CACHE modifier", "modifier-no-cache", () =>
     SqlComposer.Select.(
-      select
+      make()
       |. modifier(`MySqlNoCache)
       |. from("test")
       |. field("*")
-      |. to_sql
+      |. toSql
     )
   );
 
   genFileTest(
     "Adding a SQL_CALC_FOUND_ROWS modifier", "modifier-found-rows", () =>
     SqlComposer.Select.(
-      select
+      make()
       |. from("test")
       |. field("*")
       |. modifier(`MySqlCalcFoundRows)
-      |. to_sql
+      |. toSql
     )
   );
 
@@ -181,12 +181,154 @@ describe("Select Interface", () => {
     "modifier-distinct-priority",
     () =>
     SqlComposer.Select.(
-      select
+      make()
       |. modifier(`Distinct)
       |. from("test")
       |. field("*")
       |. modifier(`HighPriority)
-      |. to_sql
+      |. toSql
+    )
+  );
+});
+
+describe("Update Interface", () => {
+  genFileTest("An update query", "update-where", () =>
+    SqlComposer.Update.(
+      make()
+      |. from("test")
+      |. set("foo", "?")
+      |. set("bar", "?")
+      |. where({|AND moo = "cow"|})
+      |. toSql
+    )
+  );
+
+  genFileTest("An ordered ASC update query", "update-order-asc", () =>
+    SqlComposer.Update.(
+      make()
+      |. from("test")
+      |. set("foo", "?")
+      |. set("bar", "?")
+      |. orderBy(`Asc("foo"))
+      |. where({|AND moo = "cow"|})
+      |. toSql
+    )
+  );
+
+  genFileTest("An ordered DESC update query", "update-order-desc", () =>
+    SqlComposer.Update.(
+      make()
+      |. from("test")
+      |. set("foo", "?")
+      |. set("bar", "?")
+      |. orderBy(`Desc("bar"))
+      |. where({|AND moo = "cow"|})
+      |. toSql
+    )
+  );
+
+  genFileTest("A multiple ordered update query", "update-order-mult", () =>
+    SqlComposer.Update.(
+      make()
+      |. from("test")
+      |. set("foo", "?")
+      |. set("bar", "?")
+      |. orderBy(`Desc("bar"))
+      |. orderBy(`Asc("foo"))
+      |. where({|AND moo = "cow"|})
+      |. toSql
+    )
+  );
+
+  genFileTest("A low priority update query", "update-low-priority", () =>
+    SqlComposer.Update.(
+      make()
+      |. modifier(`LowPriority)
+      |. from("test")
+      |. set("foo", "?")
+      |. set("bar", "?")
+      |. orderBy(`Desc("bar"))
+      |. orderBy(`Asc("foo"))
+      |. where({|AND moo = "cow"|})
+      |. toSql
+    )
+  );
+
+  genFileTest("An update query ignore errors", "update-ignore", () =>
+    SqlComposer.Update.(
+      make()
+      |. modifier(`Ignore)
+      |. from("test")
+      |. set("foo", "?")
+      |. set("bar", "?")
+      |. orderBy(`Desc("bar"))
+      |. orderBy(`Asc("foo"))
+      |. where({|AND moo = "cow"|})
+      |. toSql
+    )
+  );
+
+  genFileTest("All modifiers update query", "update-all-modifiers", () =>
+    SqlComposer.Update.(
+      make()
+      |. modifier(`Ignore)
+      |. modifier(`LowPriority)
+      |. from("test")
+      |. set("foo", "?")
+      |. set("bar", "?")
+      |. orderBy(`Desc("bar"))
+      |. orderBy(`Asc("foo"))
+      |. where({|AND moo = "cow"|})
+      |. toSql
+    )
+  );
+
+  genFileTest("update query with a limit", "update-limit", () =>
+    SqlComposer.Update.(
+      make()
+      |. limit(~row_count=10, ~offset=?None)
+      |. modifier(`Ignore)
+      |. modifier(`LowPriority)
+      |. from("test")
+      |. set("foo", "?")
+      |. set("bar", "?")
+      |. orderBy(`Desc("bar"))
+      |. orderBy(`Asc("foo"))
+      |. where({|AND moo = "cow"|})
+      |. toSql
+    )
+  );
+
+  genFileTest("update query with an offset", "update-offset", () =>
+    SqlComposer.Update.(
+      make()
+      |. limit(~row_count=10, ~offset=9)
+      |. modifier(`Ignore)
+      |. modifier(`LowPriority)
+      |. from("test")
+      |. set("foo", "?")
+      |. set("bar", "?")
+      |. orderBy(`Desc("bar"))
+      |. orderBy(`Asc("foo"))
+      |. where({|AND moo = "cow"|})
+      |. toSql
+    )
+  );
+
+  genFileTest("update query with a join", "update-join", () =>
+    SqlComposer.Update.(
+      make()
+      |. limit(~row_count=10, ~offset=?None)
+      |. modifier(`Ignore)
+      |. join("JOIN animal ON test.animal_id = animal.id")
+      |. modifier(`LowPriority)
+      |. from("test")
+      |. set("foo", "?")
+      |. set("bar", "?")
+      |. orderBy(`Desc("bar"))
+      |. orderBy(`Asc("foo"))
+      |. where({|AND moo = "cow"|})
+      |. toSql
     )
   );
 });

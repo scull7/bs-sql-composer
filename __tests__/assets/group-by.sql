@@ -1,6 +1,5 @@
 SELECT DISTINCT
   foo
 FROM test
-WHERE 1=1
 GROUP BY
   foo

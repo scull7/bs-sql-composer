@@ -1,4 +1,3 @@
 SELECT SQL_NO_CACHE
   *
 FROM test
-WHERE 1=1

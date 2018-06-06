@@ -17,26 +17,27 @@ module Select: {
    *     |. field("*")
    *     |. from("test")
    *     |. where("AND test.foo = ?")
-   *     |. to_sql
+   *     |. toSql
    *   );
    * Js.log2("SQL: ", sql);
    *````
    */;
   type t;
 
-  type flag = [
-    | `Distinct
-    | `HighPriority
-    | `StraightJoin
-    | `MySqlNoCache
-    | `MySqlCalcFoundRows
-  ];
+  let make: unit => t;
 
-  type ord = [ | `Asc(string) | `Desc(string)];
-
-  let select: t;
-
-  let modifier: (t, flag) => t;
+  let modifier:
+    (
+      t,
+      [
+        | `Distinct
+        | `HighPriority
+        | `StraightJoin
+        | `MySqlNoCache
+        | `MySqlCalcFoundRows
+      ]
+    ) =>
+    t;
 
   let field: (t, string) => t;
 
@@ -46,11 +47,52 @@ module Select: {
 
   let where: (t, string) => t;
 
-  let group_by: (t, string) => t;
+  let groupBy: (t, string) => t;
 
-  let order_by: (t, ord) => t;
+  let orderBy: (t, [ | `Asc(string) | `Desc(string)]) => t;
 
   let limit: (t, ~offset: int=?, ~row_count: int) => t;
 
-  let to_sql: t => string;
+  let toSql: t => string;
+};
+
+module Update: {
+  /**
+   * # SqlComposer.Update
+   *
+   * Generate composable SQL Update statements and fragments.
+   *
+   * Here is a basic example:
+   * ```reason
+   * let sql =
+   *   SqlComposer.Update.(
+   *     make()
+   *     |. from("test")
+   *     |. set("foo", "?")
+   *     |. set("bar", "?")
+   *     |. where({|AND moo = "cow"|})
+   *     |. toSql
+   *   );
+   * Js.log2("SQL: ", sql);
+   * ```
+   */;
+  type t;
+
+  let make: unit => t;
+
+  let modifier: (t, [ | `Ignore | `LowPriority]) => t;
+
+  let from: (t, string) => t;
+
+  let join: (t, string) => t;
+
+  let set: (t, string, string) => t;
+
+  let where: (t, string) => t;
+
+  let orderBy: (t, [ | `Asc(string) | `Desc(string)]) => t;
+
+  let limit: (t, ~offset: int=?, ~row_count: int) => t;
+
+  let toSql: t => string;
 };
