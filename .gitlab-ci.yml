@@ -1,3 +1,4 @@
+image: node
 pages:
   script:
   - git clone https://github.com/jaredly/redoc.git /opt/redoc
