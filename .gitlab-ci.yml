@@ -1,5 +1,6 @@
-image: node
 pages:
+  script
+  - echo "USING PRE-BUILT SITE"
   artifacts:
     paths:
     - /docs
