@@ -1,6 +1,7 @@
 pages:
   script:
   - echo "USING PRE-BUILT DOCS"
+  - mv docs public
   artifacts:
     paths:
-    - docs
+    - public
