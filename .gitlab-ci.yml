@@ -1,7 +1,6 @@
-image: node
 pages:
-  script
-  - which node
+  script:
+  - echo "USING PRE-BUILT DOCS"
   artifacts:
     paths:
     - /docs
