@@ -388,6 +388,29 @@ describe("Update Interface", () => {
   );
 });
 
+describe("Select Composition", () =>
+  genFileTest("Order By 2 fields", "order-by-2-fields", () => {
+    let base =
+      SqlComposer.Select.(
+        make()
+        |. from("moo")
+        |. orderBy(`Asc("foo"))
+        |. field("foo AS bar")
+        |. limit(~row_count=20, ~offset=0)
+      );
+
+    let user = base =>
+      SqlComposer.Select.(
+        base
+        |. from("test")
+        |. orderBy(`Desc("bar"))
+        |. limit(~row_count=10, ~offset=2)
+      );
+
+    user(base) |. SqlComposer.Select.toSql;
+  })
+);
+
 describe("Conversion Inteface", () => {
   genFileTest("Select to Update", "conversion-select-to-update", () => {
     let select =
